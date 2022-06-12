@@ -1,8 +1,14 @@
+<!--
+ * @Date: 2022-06-11 20:37:00
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-11 20:44:34
+ * @FilePath: \zb\src\App.vue
+-->
 <template>
-  <div id="nav">
+  <!-- <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-  </div>
+  </div> -->
   <router-view/>
 </template>
 
