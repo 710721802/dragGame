@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-11 17:42:59
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-12 14:34:15
+ * @LastEditTime: 2022-06-12 16:49:18
  * @FilePath: \zb\src\views\login\Login.vue
 -->
 <template>
@@ -9,13 +9,65 @@
     <div class="contentBox">
       <img src="@/assets/index_icon.png" alt="">
       <div class="login-box">
-        <van-button type="primary">主要按钮</van-button>
+        <div class="login-box-title">登录</div>
+        <van-form @submit="onSubmit">
+          <van-cell-group inset>
+            <div class="label-title">用户名:</div>
+            <van-field
+              v-model="username"
+              name="userName"
+              label=""
+              :rules="[{ required: true, message: '请填写用户名' }]"
+            />
+            <div class="label-title">密码:</div>
+            <van-field
+              v-model="password"
+              type="password"
+              name="password"
+              label=""
+              :rules="[{ required: true, message: '请填写密码' }]"
+            />
+          </van-cell-group>
+          <div class="form-submit-btn">
+            <van-button block type="primary" native-type="submit">
+              提交
+            </van-button>
+          </div>
+        </van-form>
+        <div class="bottom-logo">
+          <img src="@/assets/images/login/xiaoyuzhou.png" alt="">
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+export default {
+  setup() {
+    const router = useRouter()
+    const username = ref('');
+    const password = ref('');
+    const onSubmit = (values) => {
+      console.log('submit', values);
+      localStorage.setItem('userName',values.userName)
+      router.push(
+        {
+          path: 'start'
+        }
+      )
+    };
+
+    return {
+      username,
+      password,
+      onSubmit,
+    };
+  },
+}
 
 </script>
 
@@ -37,10 +89,62 @@ $bk_blur: #031428;
     }
     .login-box{
       width: 350px;
-      height: 500px;
+      min-height: 500px;
       background-color: #192437;
       margin-right: 40px;
+      .login-box-title{
+        font-size: 30px;
+        color: #fff;
+        text-align: left;
+        padding: 68px 30px 10px 30px;
+        margin-bottom: 48px;
+        &::after{
+          content: "";
+          display: block;
+          width: 100%;
+          height: 1px;
+          margin-top: 8px;
+          background-color: #fff;
+        }
+      }
+      .label-title{
+        text-align: left;
+        color: #fff;
+        padding: 0 16px;
+        font-size: 20px;
+      }
+      .bottom-logo{
+        padding: 40px 0 26px 0;
+        font-size: 0;
+        text-align: center;
+        img{
+          margin: 0;
+        }
+      }
+      .form-submit-btn{
+        padding: 10px 30px 0 30px;
+      }
     }
   }
+}
+:deep(.van-cell-group){
+  background: none;
+}
+:deep(.van-field__label){
+  font-size: 20px;
+  color: #fff;
+  // display: block;
+  // width: 100%;
+}
+.van-cell{
+  // flex-wrap: wrap;
+  background: none;
+}
+:deep(.van-field__control){
+  background-color: #29354C;
+  height: 34px;
+  border-radius: 6px;
+  color: #586378;
+  padding: 0 10px;
 }
 </style>

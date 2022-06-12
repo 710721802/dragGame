@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-01 14:04:39
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-12 14:24:47
+ * @LastEditTime: 2022-06-12 18:04:41
  * @FilePath: \zb\src\router\index.js
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -21,16 +21,25 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
+  // 登录页面
   {
     path: '/login',
     name: 'Login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/login/Login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/Login.vue')
+  },
+  // 开始页面
+  {
+    path: '/start',
+    name: 'Start',
+    component: () => import(/* webpackChunkName: "start" */ '@/views/start/index.vue')
+  },
+  // 游戏主页面
+  {
+    path: '/gameMainPage',
+    name: 'GameMainPage',
+    component: () => import(/* webpackChunkName: "start" */ '@/views/gameMainPage/index.vue')
   },
 ]
-
 const router = createRouter({
   // history: createWebHashHistory(),
   history: createWebHistory(),
