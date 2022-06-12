@@ -1,15 +1,15 @@
 <!--
  * @Date: 2022-06-11 17:42:59
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-11 19:09:29
- * @FilePath: \gamecode\src\views\login\login.vue
+ * @LastEditTime: 2022-06-12 14:34:15
+ * @FilePath: \zb\src\views\login\Login.vue
 -->
 <template>
   <div class="loginPage">
     <div class="contentBox">
       <img src="@/assets/index_icon.png" alt="">
       <div class="login-box">
-
+        <van-button type="primary">主要按钮</van-button>
       </div>
     </div>
   </div>
