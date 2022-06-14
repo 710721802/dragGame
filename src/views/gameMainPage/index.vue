@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-12 23:48:21
+ * @LastEditTime: 2022-06-13 23:51:45
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -21,6 +21,7 @@
         <span class="line"></span>
         <van-button round type="primary">完成</van-button>
       </div>
+      <!-- 步骤线 -->
       <van-steps :active="gameStepNumber">
         <van-step></van-step>
         <van-step></van-step>
@@ -30,6 +31,30 @@
         <van-step></van-step>
         <van-step></van-step>
       </van-steps>
+      <Vue3DraggableResizable
+        v-for="(item, index) in modelImgDataList"
+        :key="item"
+        :initW="item.initW"
+        :initH="item.initH"
+        :x="item.x"
+        :y="item.y"
+        :w="item.w"
+        :h="item.h"
+        :active="item.active"
+        :draggable="item.draggable"
+        :resizable="item.resizable"
+        @activated="print('activated')"
+        @deactivated="print('deactivated')"
+        @drag-start="print('drag-start')"
+        @resize-start="print('resize-start')"
+        @dragging="print('dragging')"
+        @resizing="print('resizing')"
+        @drag-end="print('drag-end')"
+        @resize-end="print('resize-end')"
+        @click="draggableClick(index)"
+      >
+        <img :src="getImgUrl(item.imgUrl)" alt="">
+      </Vue3DraggableResizable>
     </div>
   </div>
 </template>
@@ -69,10 +94,53 @@ export default {
         key: 5
       },
     ])
-
+    // 可拖拽模型图片数据
+    const modelImgDataList = ref([
+      {
+        name: 'name',
+        imgUrl: 'images/model/橙色/正视/正-老年男-橙',
+        initW: 100,
+        initH: 100,
+        x: 100,
+        y: 100,
+        w: 100,
+        h: 100,
+        active: true,
+        draggable: true,
+        resizable: false,
+      },
+      {
+        name: 'name',
+        imgUrl: 'images/model/橙色/正视/正-老年女-橙',
+        initW: 100,
+        initH: 100,
+        x: 100,
+        y: 100,
+        w: 100,
+        h: 100,
+        active: false,
+        draggable: true,
+        resizable: false,
+      },
+    ])
+    // 获取图片
+    const getImgUrl = (name) => {
+      return require(`@/assets/${name}.png`)
+    }
+    const print = (val) => {
+      console.log(val)
+    }
+    // 点击组件事件
+    const draggableClick = index => {
+      console.log(index,'----index');
+    }
     return {
       gameStepNumber,
       stepInfo,
+      modelImgDataList,
+      print,
+      getImgUrl,
+      draggableClick,
     }
   }
 }
@@ -91,7 +159,7 @@ $bk_blur: #031428;
     box-sizing: border-box;
     width: calc(100% - 52px);
     margin: 0 auto;
-    min-height: 200px;
+    min-height: calc(100% - 145px);
     .top-btns-box{
       display: flex;
       justify-content: space-between;

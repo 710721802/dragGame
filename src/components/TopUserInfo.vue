@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2022-06-12 17:39:22
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-13 23:47:45
+ * @FilePath: \zb\src\components\TopUserInfo.vue
+-->
 <template>
   <div class="top-box">
     <div class="logo">
@@ -27,8 +33,9 @@ export default {
 
 <style lang="scss" scoped>
   .top-box{
-    padding: 26px;
+    padding: 20px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
 </style>
