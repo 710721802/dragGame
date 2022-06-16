@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-01 14:04:39
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-12 18:04:41
+ * @LastEditTime: 2022-06-16 23:37:30
  * @FilePath: \zb\src\router\index.js
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -38,6 +38,12 @@ const routes = [
     path: '/gameMainPage',
     name: 'GameMainPage',
     component: () => import(/* webpackChunkName: "start" */ '@/views/gameMainPage/index.vue')
+  },
+  // 选择关卡
+  {
+    path: '/selectLevel',
+    name: 'SelectLevel',
+    component: () => import(/* webpackChunkName: "start" */ '@/views/selectLevel/index.vue')
   },
 ]
 const router = createRouter({

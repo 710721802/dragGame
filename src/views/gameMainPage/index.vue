@@ -1,36 +1,63 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-13 23:51:45
+ * @LastEditTime: 2022-06-16 23:07:13
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
   <div class="gameMainPage">
     <TopUserinfo></TopUserinfo>
+    <div class="center-stage"></div>
     <div class="game-box">
-      <div class="top-btns-box">
-        <van-button
-          round
-          type="primary"
-          v-for="item in stepInfo"
-          :key="item.key"
-          :disabled="gameStepNumber !== item.key"
-        >
-          {{item.value}}
-        </van-button>
-        <span class="line"></span>
-        <van-button round type="primary">完成</van-button>
+      <div class="top-box">
+        <div class="top-btns-box">
+          <van-button
+            round
+            type="primary"
+            v-for="item in stepInfo"
+            :key="item.key"
+            :disabled="gameStepNumber !== item.key"
+          >
+            {{item.value}}
+          </van-button>
+          <span class="line"></span>
+          <van-button round type="primary">完成</van-button>
+        </div>
+        <!-- 步骤线 -->
+        <van-steps :active="gameStepNumber">
+          <van-step></van-step>
+          <van-step></van-step>
+          <van-step></van-step>
+          <van-step></van-step>
+          <van-step></van-step>
+          <van-step></van-step>
+          <van-step></van-step>
+        </van-steps>
       </div>
-      <!-- 步骤线 -->
-      <van-steps :active="gameStepNumber">
-        <van-step></van-step>
-        <van-step></van-step>
-        <van-step></van-step>
-        <van-step></van-step>
-        <van-step></van-step>
-        <van-step></van-step>
-        <van-step></van-step>
-      </van-steps>
+      <!--  底部操作按钮 -->
+      <div class="bottom-box">
+        <div class="left">
+          <span class="add">
+            <img src="@/assets/game/add.png" alt="">
+          </span>
+          <span class="center">
+            <img src="@/assets/game/center.png" alt="">
+          </span>
+          <span class="subtract">
+            <img src="@/assets/game/subtract.png" alt="">
+          </span>
+        </div>
+        <div class="right">
+          <div
+            class="item"
+            v-for="item in 5"
+            :key="item"
+            @click="goEditaddModelData(index)"
+          >
+            <img src="@/assets/game/imgBk.png" alt="">
+          </div>
+        </div>
+      </div>
       <Vue3DraggableResizable
         v-for="(item, index) in modelImgDataList"
         :key="item"
@@ -53,18 +80,22 @@
         @resize-end="print('resize-end')"
         @click="draggableClick(index)"
       >
-        <img :src="getImgUrl(item.imgUrl)" alt="">
+        <img style="width:100%;" :src="getImgUrl(item.imgUrl)" alt="">
       </Vue3DraggableResizable>
     </div>
   </div>
+  <addModel
+  ></addModel>
 </template>
 
 <script>
 import { ref } from '@vue/reactivity'
 import TopUserinfo from '@/components/TopUserInfo.vue'
+import addModel from "./components/addModel.vue"
 export default {
   components: {
-    TopUserinfo
+    TopUserinfo,
+    addModel,
   },
   setup () {
     const gameStepNumber = ref(2)
@@ -95,10 +126,11 @@ export default {
       },
     ])
     // 可拖拽模型图片数据
+    const currentModelImgIndex = ref(null)
     const modelImgDataList = ref([
       {
         name: 'name',
-        imgUrl: 'images/model/橙色/正视/正-老年男-橙',
+        imgUrl: 'images/model/橙色/俯视/俯-老年男-橙',
         initW: 100,
         initH: 100,
         x: 100,
@@ -111,7 +143,7 @@ export default {
       },
       {
         name: 'name',
-        imgUrl: 'images/model/橙色/正视/正-老年女-橙',
+        imgUrl: 'images/model/橙色/俯视/俯-老年女-橙',
         initW: 100,
         initH: 100,
         x: 100,
@@ -123,24 +155,67 @@ export default {
         resizable: false,
       },
     ])
+
     // 获取图片
+    /**
+     * @description: 获取图片
+     * @param {*} name
+     * @return {void}
+     */
     const getImgUrl = (name) => {
       return require(`@/assets/${name}.png`)
     }
     const print = (val) => {
       console.log(val)
     }
+    
     // 点击组件事件
+    /**
+     * @description: 点击拖拽组件
+     * @param {*} index 
+     * @return {void}
+     */
     const draggableClick = index => {
-      console.log(index,'----index');
+      console.log(index,'----index')
+      currentModelImgIndex.value = index
     }
+    
+    /**
+     * @description: 添加模型
+     * @param {*} obj 模型对象
+     * @return {void}
+     */
+    const addModelData = obj => {
+      if(obj){
+        modelImgDataList.value = [...modelImgDataList.value, obj]
+      }
+    }
+
+    /**
+     * @description: 跳转编辑模型
+     * @param {*} index
+     * @return {*}
+     */
+    const goEditAddModel = index => {
+      router.push({
+        name: 'AddModel',
+        params: {
+          index: index,
+        }
+      })
+    }
+
+    addModelData()
     return {
       gameStepNumber,
       stepInfo,
       modelImgDataList,
+      currentModelImgIndex,
       print,
       getImgUrl,
       draggableClick,
+      addModelData,
+      goEditAddModel,
     }
   }
 }
@@ -153,13 +228,29 @@ $bk_blur: #031428;
   width: 100vw;
   height: 100vh;
   background-color: $bk_blur;
+  .center-stage{
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    left: 50%;
+    margin-left: -310px;
+    position: absolute;
+    background-color: #fff;
+  }
   .game-box{
+    position: relative;
+    z-index: 2;
     border: 2px solid #fff;
-    padding: 26px;
     box-sizing: border-box;
-    width: calc(100% - 52px);
+    // width: calc(100% - 52px);
+    // min-height: calc(100% - 145px);
+    width: 966px;
+    height: 622px;
     margin: 0 auto;
-    min-height: calc(100% - 145px);
+    .top-box {
+      background: linear-gradient(#031429, #0B3972);
+      padding: 15px 20px;
+    }
     .top-btns-box{
       display: flex;
       justify-content: space-between;
@@ -172,6 +263,39 @@ $bk_blur: #031428;
       .van-button--normal{
         font-size: 16px;
         min-width: 102px;
+      }
+    }
+    .bottom-box {
+      width: 100%;
+      height: 100px;
+      background: #00152E;
+      position: absolute;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      .left {
+        display: flex;
+        align-items: center;
+        
+        .add {
+          margin: 0 20px 0 20px;
+        }
+        .center {
+          margin-right: 20px;
+        }
+        .subtract {
+          margin-right: 20px;
+        }
+      }
+      .right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        .item {
+          font-size: 0;
+          margin-right: 10px;
+        }
       }
     }
   }
