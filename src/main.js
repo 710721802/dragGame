@@ -1,14 +1,14 @@
 /*
  * @Date: 2022-06-11 20:37:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-13 22:14:12
+ * @LastEditTime: 2022-06-17 22:37:11
  * @FilePath: \zb\src\main.js
  */
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Button, Form, Field, CellGroup, Step, Steps } from 'vant';
+import { Button, Form, Field, CellGroup, Step, Steps, Overlay, } from 'vant';
 import Vue3DraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 import 'vant/lib/index.css';
@@ -22,4 +22,5 @@ createApp(App).use(store).use(router)
 .use(CellGroup)
 .use(Step)
 .use(Steps)
+.use(Overlay)
 .mount('#app')

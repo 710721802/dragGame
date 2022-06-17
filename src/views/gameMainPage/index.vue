@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-16 23:07:13
+ * @LastEditTime: 2022-06-17 22:50:27
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -50,8 +50,8 @@
         <div class="right">
           <div
             class="item"
-            v-for="item in 5"
-            :key="item"
+            v-for="(item, index) in 5"
+            :key="index"
             @click="goEditaddModelData(index)"
           >
             <img src="@/assets/game/imgBk.png" alt="">
@@ -60,13 +60,13 @@
       </div>
       <Vue3DraggableResizable
         v-for="(item, index) in modelImgDataList"
-        :key="item"
+        :key="index"
         :initW="item.initW"
         :initH="item.initH"
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
+        v-model:x="item.x"
+        v-model:y="item.y"
+        v-model:w="item.w"
+        v-model:h="item.h"
         :active="item.active"
         :draggable="item.draggable"
         :resizable="item.resizable"
@@ -74,7 +74,7 @@
         @deactivated="print('deactivated')"
         @drag-start="print('drag-start')"
         @resize-start="print('resize-start')"
-        @dragging="print('dragging')"
+        @dragging="print('dragging',{ x: item.x, y: item.y })"
         @resizing="print('resizing')"
         @drag-end="print('drag-end')"
         @resize-end="print('resize-end')"
@@ -85,11 +85,13 @@
     </div>
   </div>
   <addModel
+    ref="addModelModal"
+    :modelData="modelImgDataList"
   ></addModel>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
 export default {
@@ -98,6 +100,8 @@ export default {
     addModel,
   },
   setup () {
+    // 添加模型弹框
+    const addModelModal = ref(null)
     const gameStepNumber = ref(2)
     const stepInfo = ref([
       {
@@ -165,8 +169,11 @@ export default {
     const getImgUrl = (name) => {
       return require(`@/assets/${name}.png`)
     }
-    const print = (val) => {
-      console.log(val)
+
+    const print = (val, obj) => {
+      if(val === 'dragging'){
+        console.log(val, obj);
+      }
     }
     
     // 点击组件事件
@@ -205,17 +212,30 @@ export default {
       })
     }
 
+    
+    /**
+     * @description: 添加编辑模型
+     * @param {*} index
+     * @return {*}
+     */
+    const goEditaddModelData = (index) => {
+      console.log(index);
+      addModelModal.value.showModal(index)
+    }
+
     addModelData()
     return {
       gameStepNumber,
       stepInfo,
       modelImgDataList,
       currentModelImgIndex,
+      addModelModal,
       print,
       getImgUrl,
       draggableClick,
       addModelData,
       goEditAddModel,
+      goEditaddModelData,
     }
   }
 }
@@ -239,7 +259,7 @@ $bk_blur: #031428;
   }
   .game-box{
     position: relative;
-    z-index: 2;
+    z-index: 1;
     border: 2px solid #fff;
     box-sizing: border-box;
     // width: calc(100% - 52px);
