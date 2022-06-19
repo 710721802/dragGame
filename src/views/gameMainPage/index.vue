@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-17 22:50:27
+ * @LastEditTime: 2022-06-19 17:07:16
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -80,7 +80,8 @@
         @resize-end="print('resize-end')"
         @click="draggableClick(index)"
       >
-        <img style="width:100%;" :src="getImgUrl(item.imgUrl)" alt="">
+      {{item.towards}}
+        <img style="width:100%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
       </Vue3DraggableResizable>
     </div>
   </div>
@@ -134,26 +135,29 @@ export default {
     const modelImgDataList = ref([
       {
         name: 'name',
-        imgUrl: 'images/model/橙色/俯视/俯-老年男-橙',
+        imgUrl: 'images/model/橙色/俯视/老年男',
         initW: 100,
         initH: 100,
         x: 100,
         y: 100,
         w: 100,
         h: 100,
+        towards: 30,
         active: true,
         draggable: true,
         resizable: false,
+
       },
       {
         name: 'name',
-        imgUrl: 'images/model/橙色/俯视/俯-老年女-橙',
+        imgUrl: 'images/model/橙色/俯视/老年女',
         initW: 100,
         initH: 100,
         x: 100,
         y: 100,
         w: 100,
         h: 100,
+        towards: 50,
         active: false,
         draggable: true,
         resizable: false,
