@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-19 17:11:24
+ * @LastEditTime: 2022-06-19 17:52:35
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -77,7 +77,10 @@ export default {
   components: {
     TopUserinfo,
   },
-  setup () {
+  emits: {
+    'addModelData' : null,
+  },
+  setup (props, context) {
     const show = ref(false)
     // 选中的颜色index
     const currentColorIndex = ref(0)
@@ -88,6 +91,21 @@ export default {
       show.value = true
     }
     const hideModal = () => {
+      let obj = {
+        name: 'name',
+        imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
+        initW: 100,
+        initH: 100,
+        x: 200,
+        y: 200,
+        w: 100,
+        h: 100,
+        towards: 30,
+        active: true,
+        draggable: true,
+        resizable: false,
+      }
+      context.emit('addModelData',obj)
       show.value = false
     }
     

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-19 17:07:16
+ * @LastEditTime: 2022-06-19 23:22:30
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -9,6 +9,30 @@
     <TopUserinfo></TopUserinfo>
     <div class="center-stage"></div>
     <div class="game-box">
+      <Vue3DraggableResizable
+        v-for="(item, index) in modelImgDataList"
+        :key="index"
+        :initW="item.initW"
+        :initH="item.initH"
+        v-model:x="item.x"
+        v-model:y="item.y"
+        v-model:w="item.w"
+        v-model:h="item.h"
+        :active="item.active"
+        :draggable="item.draggable"
+        :resizable="item.resizable"
+        @activated="print('activated')"
+        @deactivated="print('deactivated')"
+        @drag-start="print('drag-start')"
+        @resize-start="print('resize-start')"
+        @dragging="print('dragging',{ x: item.x, y: item.y })"
+        @resizing="print('resizing')"
+        @drag-end="print('drag-end')"
+        @resize-end="print('resize-end')"
+        @click="draggableClick(index)"
+      >
+        <img style="width:100%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
+      </Vue3DraggableResizable>
       <div class="top-box">
         <div class="top-btns-box">
           <van-button
@@ -37,13 +61,13 @@
       <!--  底部操作按钮 -->
       <div class="bottom-box">
         <div class="left">
-          <span class="add">
+          <span @click="rotateRole(-15)" class="add">
             <img src="@/assets/game/add.png" alt="">
           </span>
           <span class="center">
             <img src="@/assets/game/center.png" alt="">
           </span>
-          <span class="subtract">
+          <span @click="rotateRole(15)" class="subtract">
             <img src="@/assets/game/subtract.png" alt="">
           </span>
         </div>
@@ -58,35 +82,11 @@
           </div>
         </div>
       </div>
-      <Vue3DraggableResizable
-        v-for="(item, index) in modelImgDataList"
-        :key="index"
-        :initW="item.initW"
-        :initH="item.initH"
-        v-model:x="item.x"
-        v-model:y="item.y"
-        v-model:w="item.w"
-        v-model:h="item.h"
-        :active="item.active"
-        :draggable="item.draggable"
-        :resizable="item.resizable"
-        @activated="print('activated')"
-        @deactivated="print('deactivated')"
-        @drag-start="print('drag-start')"
-        @resize-start="print('resize-start')"
-        @dragging="print('dragging',{ x: item.x, y: item.y })"
-        @resizing="print('resizing')"
-        @drag-end="print('drag-end')"
-        @resize-end="print('resize-end')"
-        @click="draggableClick(index)"
-      >
-      {{item.towards}}
-        <img style="width:100%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
-      </Vue3DraggableResizable>
     </div>
   </div>
   <addModel
     ref="addModelModal"
+    @addModelData="addModelData"
     :modelData="modelImgDataList"
   ></addModel>
 </template>
@@ -132,37 +132,8 @@ export default {
     ])
     // 可拖拽模型图片数据
     const currentModelImgIndex = ref(null)
-    const modelImgDataList = ref([
-      {
-        name: 'name',
-        imgUrl: 'images/model/橙色/俯视/老年男',
-        initW: 100,
-        initH: 100,
-        x: 100,
-        y: 100,
-        w: 100,
-        h: 100,
-        towards: 30,
-        active: true,
-        draggable: true,
-        resizable: false,
-
-      },
-      {
-        name: 'name',
-        imgUrl: 'images/model/橙色/俯视/老年女',
-        initW: 100,
-        initH: 100,
-        x: 100,
-        y: 100,
-        w: 100,
-        h: 100,
-        towards: 50,
-        active: false,
-        draggable: true,
-        resizable: false,
-      },
-    ])
+    // 所有添加进来的模型数据
+    const modelImgDataList = ref([])
 
     // 获取图片
     /**
@@ -227,6 +198,14 @@ export default {
       addModelModal.value.showModal(index)
     }
 
+    const rotateRole = val => {
+      modelImgDataList.value[currentModelImgIndex.value].towards += val
+      if(modelImgDataList.value[currentModelImgIndex.value].towards >= 360 || modelImgDataList.value[currentModelImgIndex.value].towards <= -360){
+        modelImgDataList.value[currentModelImgIndex.value].towards = 0
+      }
+      console.log(modelImgDataList.value[currentModelImgIndex.value].towards)
+    }
+
     addModelData()
     return {
       gameStepNumber,
@@ -240,6 +219,7 @@ export default {
       addModelData,
       goEditAddModel,
       goEditaddModelData,
+      rotateRole,
     }
   }
 }
