@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-19 17:52:35
+ * @LastEditTime: 2022-06-19 23:33:34
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -90,6 +90,11 @@ export default {
       console.log(index,'添加模型')
       show.value = true
     }
+    
+    /**
+     * @description: 关闭按钮
+     * @return {*}
+     */
     const hideModal = () => {
       let obj = {
         name: 'name',

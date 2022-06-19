@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-19 23:22:30
+ * @LastEditTime: 2022-06-20 00:34:53
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -10,6 +10,7 @@
     <div class="center-stage"></div>
     <div class="game-box">
       <Vue3DraggableResizable
+        style="z-index: 3;"
         v-for="(item, index) in modelImgDataList"
         :key="index"
         :initW="item.initW"
@@ -23,11 +24,11 @@
         :resizable="item.resizable"
         @activated="print('activated')"
         @deactivated="print('deactivated')"
-        @drag-start="print('drag-start')"
+        @drag-start="print('drag-start', modelImgDataList[index], index)"
+        @drag-end="print('drag-end', modelImgDataList[index], index)"
         @resize-start="print('resize-start')"
-        @dragging="print('dragging',{ x: item.x, y: item.y })"
+        @dragging="print('dragging')"
         @resizing="print('resizing')"
-        @drag-end="print('drag-end')"
         @resize-end="print('resize-end')"
         @click="draggableClick(index)"
       >
@@ -144,10 +145,35 @@ export default {
     const getImgUrl = (name) => {
       return require(`@/assets/${name}.png`)
     }
+    let modelBeginCoords = {
+      x: 0,
+      y: 0
+    }
+    const print = (val, obj, index) => {
+      
+      switch (true) {
+        // 拖拽开始
+        case val === 'drag-start':
+          currentModelImgIndex.value = index
+          console.log(modelImgDataList.value[index]);
+          modelBeginCoords.x = modelImgDataList.value[index].x
+          modelBeginCoords.y = modelImgDataList.value[index].y
+        console.log('drag-start')
+        break
+        // 拖拽中
+        case val === 'dragging':
+          console.log(modelBeginCoords)
+          console.log('dragging')
+        break
+        // 拖拽结束
+        case val === 'drag-end':
+          if(obj.x > 700 || obj.x < 170 || obj.y < 125 || obj.y > 420) {
+            modelImgDataList.value[index].x = modelBeginCoords.x
+            modelImgDataList.value[index].y = modelBeginCoords.y
+          }
+        console.log('drag-end', index)
+        break
 
-    const print = (val, obj) => {
-      if(val === 'dragging'){
-        console.log(val, obj);
       }
     }
     
@@ -194,7 +220,6 @@ export default {
      * @return {*}
      */
     const goEditaddModelData = (index) => {
-      console.log(index);
       addModelModal.value.showModal(index)
     }
 
