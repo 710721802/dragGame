@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-19 23:33:34
+ * @LastEditTime: 2022-06-20 21:59:11
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -105,7 +105,7 @@ export default {
         y: 200,
         w: 100,
         h: 100,
-        towards: 30,
+        towards: 0,
         active: true,
         draggable: true,
         resizable: false,
@@ -122,7 +122,9 @@ export default {
      * @return {void}
      */
     const getImgUrl = (name) => {
-      return require(`@\/assets\/${name}.png`)
+      if(name){
+        return require(`@/assets/${name}.png`) ? require(`@/assets/${name}.png`) : ''
+      }
     }
 
     return {
