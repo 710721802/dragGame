@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 16:47:33
  * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-21 15:08:06
+ * @LastEditTime: 2022-06-21 17:33:44
  * @FilePath: \zb\src\views\start\index.vue
 -->
 <template>
@@ -33,7 +33,6 @@ export default {
     TopUserinfo
   },
   setup () {
-    
     const router = useRouter()
     const goTo = (path) => {
       router.push(
