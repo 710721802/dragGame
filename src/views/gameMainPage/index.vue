@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-20 21:59:02
+ * @LastEditTime: 2022-06-22 00:57:41
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -75,11 +75,18 @@
         <div class="right">
           <div
             class="item"
-            v-for="(item, index) in 5"
+            v-for="(item, index) in addModelBoxList[gameStepNumber]"
             :key="index"
-            @click="goEditaddModelData(index)"
           >
-            <img src="@/assets/game/imgBk.png" alt="">
+            <span class="name" v-show="item.showAdd">
+              {{item.defaultName}}
+            </span>
+            <img
+              v-show="item.showAdd"
+              @click="goEditaddModelData(index)"
+              src="@/assets/game/imgBk.png"
+              alt=""
+            >
           </div>
         </div>
       </div>
@@ -93,9 +100,11 @@
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity'
+import { ref } from '@vue/reactivity'
+import { watchEffect } from '@vue/runtime-core'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
+import { ADD_MODEL_BOX_LIST } from './data'
 export default {
   components: {
     TopUserinfo,
@@ -104,7 +113,7 @@ export default {
   setup () {
     // 添加模型弹框
     const addModelModal = ref(null)
-    const gameStepNumber = ref(2)
+    const gameStepNumber = ref(1)
     const stepInfo = ref([
       {
         value: '角色',
@@ -150,6 +159,8 @@ export default {
         resizable: false,
       }
     ])
+    // 底部模型添加框
+    const addModelBoxList = ref(ADD_MODEL_BOX_LIST) 
 
     // 获取图片
     /**
@@ -238,6 +249,7 @@ export default {
      */
     const goEditaddModelData = (index) => {
       addModelModal.value.showModal(index)
+      addModelBoxList.value[gameStepNumber.value][index].showAdd = false
     }
 
     const rotateRole = val => {
@@ -249,12 +261,16 @@ export default {
     }
 
     addModelData()
+    watchEffect(() => {
+      console.log(111111,modelImgDataList.value)
+    })
     return {
       gameStepNumber,
       stepInfo,
       modelImgDataList,
       currentModelImgIndex,
       addModelModal,
+      addModelBoxList,
       print,
       getImgUrl,
       draggableClick,
@@ -340,7 +356,23 @@ $bk_blur: #031428;
         justify-content: flex-start;
         .item {
           font-size: 0;
+          width: 120px;
+          height: 92px;
+          background-color: #fff;
+          border-radius: 6px;
+          overflow: hidden;
           margin-right: 10px;
+          position: relative;
+          .name {
+            position: absolute;
+            font-size: 10px;
+            font-weight: bold;
+            color: #999;
+            display: inline-block;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+          }
         }
       }
     }

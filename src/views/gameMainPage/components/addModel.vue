@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-20 23:30:48
+ * @LastEditTime: 2022-06-22 00:31:25
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
