@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 16:47:33
- * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-12 18:07:31
+ * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
+ * @LastEditTime: 2022-06-21 15:08:06
  * @FilePath: \zb\src\views\start\index.vue
 -->
 <template>
@@ -15,7 +15,7 @@
         type="primary"
         class="btn"
         size="large"
-        @click="goTo('gameMainPage')"
+        @click="goTo('SelectLevel')"
       >
         开始
       </van-button>

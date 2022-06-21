@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-19 23:33:34
+ * @LastEditTime: 2022-06-20 23:30:48
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -86,8 +86,16 @@ export default {
     const currentColorIndex = ref(0)
     // 选中的角色样式index
     const currenStyleIndex = ref(0)
+    // 记录点击的第几个框进行添加
+    const clickBoxIndex = ref(0)
+
+    /**
+     * @description: 显示模型
+     * @param {*} index
+     * @return {*}
+     */
     const showModal = (index) => {
-      console.log(index,'添加模型')
+      clickBoxIndex.value = index
       show.value = true
     }
     
@@ -101,11 +109,11 @@ export default {
         imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
         initW: 100,
         initH: 100,
-        x: 200,
-        y: 200,
+        x: 302+(clickBoxIndex.value*131),
+        y: 520,
         w: 100,
         h: 100,
-        towards: 30,
+        towards: 0,
         active: true,
         draggable: true,
         resizable: false,
@@ -113,8 +121,6 @@ export default {
       context.emit('addModelData',obj)
       show.value = false
     }
-    
-    
     // 获取图片
     /**
      * @description: 获取图片
@@ -122,7 +128,9 @@ export default {
      * @return {void}
      */
     const getImgUrl = (name) => {
-      return require(`@\/assets\/${name}.png`)
+      if(name){
+        return require(`@/assets/${name}.png`) ? require(`@/assets/${name}.png`) : ''
+      }
     }
 
     return {

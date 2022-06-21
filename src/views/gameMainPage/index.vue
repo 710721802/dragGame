@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-20 00:34:53
+ * @LastEditTime: 2022-06-20 21:59:02
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -134,7 +134,22 @@ export default {
     // 可拖拽模型图片数据
     const currentModelImgIndex = ref(null)
     // 所有添加进来的模型数据
-    const modelImgDataList = ref([])
+    const modelImgDataList = ref([
+      {
+        name: 'name',
+        imgUrl: `images/model/红色/俯视/中年男`,
+        initW: 100,
+        initH: 100,
+        x: 302,
+        y: 520,
+        w: 100,
+        h: 100,
+        towards: 0,
+        active: true,
+        draggable: true,
+        resizable: false,
+      }
+    ])
 
     // 获取图片
     /**
@@ -143,7 +158,9 @@ export default {
      * @return {void}
      */
     const getImgUrl = (name) => {
-      return require(`@/assets/${name}.png`)
+      if(name){
+        return require(`@/assets/${name}.png`) ? require(`@/assets/${name}.png`) : ''
+      }
     }
     let modelBeginCoords = {
       x: 0,
