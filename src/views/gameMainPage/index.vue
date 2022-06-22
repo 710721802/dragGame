@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
- * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-22 17:55:27
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-23 00:53:48
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -46,7 +46,23 @@
             {{item.value}}
           </van-button>
           <span class="line"></span>
-          <van-button round type="primary">完成</van-button>
+          <van-button
+            round
+            type="primary"
+            @click="handelFinish"
+            v-if="showFinishBtn"
+          >
+            完成
+          </van-button>
+          <van-button
+            round
+            type="primary"
+            :disabled="!isGoNext"
+            @click="handelNextStep"
+            v-else
+          >
+            下一步
+          </van-button>
         </div>
         <!-- 步骤线 -->
         <van-steps :active="gameStepNumber">
@@ -113,7 +129,14 @@ export default {
   setup () {
     // 添加模型弹框
     const addModelModal = ref(null)
-    const gameStepNumber = ref(1)
+    const gameStepNumber = ref(0)
+    // 每一步的模型是否添加完成
+    const isAddFinish = ref(false)
+    // 是否全部拖入舞台
+    const isAllAtStage = ref(false)
+    // 是否可点击下一步
+    const isGoNext = ref(false)
+    const showFinishBtn = ref(false)
     const stepInfo = ref([
       {
         value: '角色',
@@ -160,7 +183,7 @@ export default {
       }
     ])
     // 底部模型添加框
-    const addModelBoxList = ref(ADD_MODEL_BOX_LIST) 
+    const addModelBoxList = ref(ADD_MODEL_BOX_LIST)
 
     // 获取图片
     /**
@@ -178,29 +201,49 @@ export default {
       y: 0
     }
     const print = (val, obj, index) => {
-      
       switch (true) {
         // 拖拽开始
         case val === 'drag-start':
           currentModelImgIndex.value = index
-          console.log(modelImgDataList.value[index]);
+          // console.log(modelImgDataList.value[index]);
           modelBeginCoords.x = modelImgDataList.value[index].x
           modelBeginCoords.y = modelImgDataList.value[index].y
-        console.log('drag-start')
-        break
+          console.log('drag-start')
+          break
+
         // 拖拽中
         case val === 'dragging':
-          console.log(modelBeginCoords)
-          console.log('dragging')
-        break
+          // console.log('dragging')
+          break
         // 拖拽结束
+
         case val === 'drag-end':
           if(obj.x > 700 || obj.x < 170 || obj.y < 125 || obj.y > 420) {
             modelImgDataList.value[index].x = modelBeginCoords.x
             modelImgDataList.value[index].y = modelBeginCoords.y
           }
-        console.log('drag-end', index)
-        break
+          // 拖拽模型，如果都在圆盘中，并且这一步骤的所有模型已添加 >> 可进行下一步
+          // 模型是否添加完成
+          isAddFinish.value = true
+          console.log(addModelBoxList.value[gameStepNumber.value])
+          addModelBoxList.value[gameStepNumber.value].forEach((item) => {
+            if(item.showAdd == true){
+              isAddFinish.value = false
+            }
+          })
+
+          // 是否全部拖入舞台
+          isAllAtStage.value = true
+          modelImgDataList.value.forEach((item) => {
+            if(item.y > 418){
+              isAllAtStage.value = false
+            }
+          })
+          isGoNext.value = isAddFinish.value && isAllAtStage.value
+          if(isGoNext.value && gameStepNumber.value == 5) {
+            showFinishBtn.value = true
+          }
+          break
 
       }
     }
@@ -250,6 +293,12 @@ export default {
       addModelModal.value.showModal(index, item)
       addModelBoxList.value[gameStepNumber.value][index].showAdd = false
     }
+
+    /**
+     * @description: 旋转模型
+     * @param {number} val 每一步旋转角度
+     * @return {void}
+     */
     const rotateRole = val => {
       modelImgDataList.value[currentModelImgIndex.value].towards += val
       if(modelImgDataList.value[currentModelImgIndex.value].towards >= 360 || modelImgDataList.value[currentModelImgIndex.value].towards <= -360){
@@ -257,7 +306,23 @@ export default {
       }
     }
 
-    addModelData()
+    /**
+     * @description: 下一步
+     * @return {void}
+     */
+    const handelNextStep = () => {
+      gameStepNumber.value++
+      isGoNext.value = false
+    }
+
+    /**
+     * @description: 提交数据-完成-返回结果
+     * @return {void}
+     */
+    const handelFinish = () => {
+      console.log('handelFinish')
+    }
+
     watch(
       () => modelImgDataList.value,
       (newValue, oldValue) => {
@@ -274,6 +339,10 @@ export default {
       currentModelImgIndex,
       addModelModal,
       addModelBoxList,
+      isAllAtStage,
+      isAddFinish,
+      isGoNext,
+      showFinishBtn,
       print,
       getImgUrl,
       draggableClick,
@@ -281,6 +350,8 @@ export default {
       goEditAddModel,
       goEditaddModelData,
       rotateRole,
+      handelNextStep,
+      handelFinish,
     }
   }
 }
