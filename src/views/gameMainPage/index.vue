@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
- * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-22 00:57:41
+ * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
+ * @LastEditTime: 2022-06-22 17:55:27
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -83,7 +83,7 @@
             </span>
             <img
               v-show="item.showAdd"
-              @click="goEditaddModelData(index)"
+              @click="goEditaddModelData(index, item)"
               src="@/assets/game/imgBk.png"
               alt=""
             >
@@ -101,7 +101,7 @@
 
 <script>
 import { ref } from '@vue/reactivity'
-import { watchEffect } from '@vue/runtime-core'
+import { watch, watchEffect } from '@vue/runtime-core'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
 import { ADD_MODEL_BOX_LIST } from './data'
@@ -240,27 +240,30 @@ export default {
         }
       })
     }
-
     
     /**
      * @description: 添加编辑模型
      * @param {*} index
      * @return {*}
      */
-    const goEditaddModelData = (index) => {
-      addModelModal.value.showModal(index)
+    const goEditaddModelData = (index, item) => {
+      addModelModal.value.showModal(index, item)
       addModelBoxList.value[gameStepNumber.value][index].showAdd = false
     }
-
     const rotateRole = val => {
       modelImgDataList.value[currentModelImgIndex.value].towards += val
       if(modelImgDataList.value[currentModelImgIndex.value].towards >= 360 || modelImgDataList.value[currentModelImgIndex.value].towards <= -360){
         modelImgDataList.value[currentModelImgIndex.value].towards = 0
       }
-      console.log(modelImgDataList.value[currentModelImgIndex.value].towards)
     }
 
     addModelData()
+    watch(
+      () => modelImgDataList.value,
+      (newValue, oldValue) => {
+          console.log('state watch', newValue, oldValue)
+      }
+    )
     watchEffect(() => {
       console.log(111111,modelImgDataList.value)
     })
