@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-11 20:37:00
- * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-21 17:55:45
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-23 23:01:35
  * @FilePath: \zb\src\main.js
  */
 import { createApp } from 'vue'

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-23 00:53:48
+ * @LastEditTime: 2022-06-24 00:50:46
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -10,6 +10,7 @@
     <div class="center-stage"></div>
     <div class="game-box">
       <Vue3DraggableResizable
+        class="dragBoxItem"
         style="z-index: 3;"
         v-for="(item, index) in modelImgDataList"
         :key="index"
@@ -32,7 +33,10 @@
         @resize-end="print('resize-end')"
         @click="draggableClick(index)"
       >
-        <img style="width:100%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
+        <div class="name">
+          {{item.name}} - {{item.defaultName}}
+        </div>
+        <img style="width:60%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
       </Vue3DraggableResizable>
       <div class="top-box">
         <div class="top-btns-box">
@@ -225,13 +229,11 @@ export default {
           // 拖拽模型，如果都在圆盘中，并且这一步骤的所有模型已添加 >> 可进行下一步
           // 模型是否添加完成
           isAddFinish.value = true
-          console.log(addModelBoxList.value[gameStepNumber.value])
           addModelBoxList.value[gameStepNumber.value].forEach((item) => {
             if(item.showAdd == true){
               isAddFinish.value = false
             }
           })
-
           // 是否全部拖入舞台
           isAllAtStage.value = true
           modelImgDataList.value.forEach((item) => {
@@ -239,8 +241,14 @@ export default {
               isAllAtStage.value = false
             }
           })
+          
           isGoNext.value = isAddFinish.value && isAllAtStage.value
-          if(isGoNext.value && gameStepNumber.value == 5) {
+          // 如果是人际关系，则只需拖动一个模型就可以进行下一步
+          if (gameStepNumber.value == 2) {
+            isGoNext.value = true
+          }
+          // 如果是最后一部，切满足下一步条件，就可以点击完成
+          if (gameStepNumber.value == 5 && isAllAtStage.value) {
             showFinishBtn.value = true
           }
           break
@@ -267,6 +275,12 @@ export default {
     const addModelData = obj => {
       if(obj){
         modelImgDataList.value = [...modelImgDataList.value, obj]
+      }
+      // 如果是第六步环境，只让选择一个模型加入
+      if (gameStepNumber.value == 5) {
+        addModelBoxList.value[5].forEach(item => {
+          item.showAdd = false
+        })
       }
     }
 
@@ -358,100 +372,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$bk_blur: #031428;
-.gameMainPage{
-  color: #fff;
-  width: 100vw;
-  height: 100vh;
-  background-color: $bk_blur;
-  .center-stage{
-    width: 620px;
-    height: 620px;
-    border-radius: 50%;
-    left: 50%;
-    margin-left: -310px;
-    position: absolute;
-    background-color: #fff;
-  }
-  .game-box{
-    position: relative;
-    z-index: 1;
-    border: 2px solid #fff;
-    box-sizing: border-box;
-    // width: calc(100% - 52px);
-    // min-height: calc(100% - 145px);
-    width: 966px;
-    height: 622px;
-    margin: 0 auto;
-    .top-box {
-      background: linear-gradient(#031429, #0B3972);
-      padding: 15px 20px;
-    }
-    .top-btns-box{
-      display: flex;
-      justify-content: space-between;
-      .line {
-        display: inline-block;
-        width: 2px;
-        height: 44px;
-        background-color: #fff;
-      }
-      .van-button--normal{
-        font-size: 16px;
-        min-width: 102px;
-      }
-    }
-    .bottom-box {
-      width: 100%;
-      height: 100px;
-      background: #00152E;
-      position: absolute;
-      bottom: 0;
-      display: flex;
-      justify-content: space-between;
-      .left {
-        display: flex;
-        align-items: center;
-        
-        .add {
-          margin: 0 20px 0 20px;
-        }
-        .center {
-          margin-right: 20px;
-        }
-        .subtract {
-          margin-right: 20px;
-        }
-      }
-      .right {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        .item {
-          font-size: 0;
-          width: 120px;
-          height: 92px;
-          background-color: #fff;
-          border-radius: 6px;
-          overflow: hidden;
-          margin-right: 10px;
-          position: relative;
-          .name {
-            position: absolute;
-            font-size: 10px;
-            font-weight: bold;
-            color: #999;
-            display: inline-block;
-            bottom: 5px;
-            left: 0;
-            right: 0;
-          }
-        }
-      }
-    }
-  }
-  
-}
-
+@import "./scss/index.scss";
 </style>

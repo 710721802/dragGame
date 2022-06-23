@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-22 00:31:25
+ * @LastEditTime: 2022-06-24 00:29:08
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -9,7 +9,13 @@
     <div class="wrapper" @click.stop>
       <TopUserinfo></TopUserinfo>
       <div class="game-box">
-        <van-button class="okBtn" type="primary" @click="hideModal">确认</van-button>
+        <van-button
+          class="okBtn"
+          type="primary"
+          @click="hideModal"
+        >
+          确认
+        </van-button>
         <div class="cjjs">
           创建角色
         </div>
@@ -17,7 +23,7 @@
           <label for="name">角色昵称 </label>
           <input
             type="text"
-            name="name"
+            v-model="modelDataInfo.name"
           >
           <label for="age">角色年龄 </label>
           <input
@@ -70,7 +76,8 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
+import { Dialog } from 'vant';
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import { ROLE_COLOR, ROLE_STYLE } from './data'
 export default {
@@ -88,13 +95,19 @@ export default {
     const currenStyleIndex = ref(0)
     // 记录点击的第几个框进行添加
     const clickBoxIndex = ref(0)
+    const modelDataInfo = reactive({
+      defaultName: '',
+      name: '',
+      age: 0
+    })
 
     /**
      * @description: 显示模型
      * @param {*} index
      * @return {*}
      */
-    const showModal = (index) => {
+    const showModal = (index, info) => {
+      modelDataInfo.defaultName = info.defaultName
       clickBoxIndex.value = index
       show.value = true
     }
@@ -104,23 +117,29 @@ export default {
      * @return {*}
      */
     const hideModal = () => {
-      let obj = {
-        name: 'name',
-        imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
-        initW: 100,
-        initH: 100,
-        x: 302+(clickBoxIndex.value*131),
-        y: 520,
-        w: 100,
-        h: 100,
-        towards: 0,
-        active: true,
-        draggable: true,
-        resizable: false,
+      if(!modelDataInfo.name.length) {
+        Dialog({ message: '请输入角色昵称' });
+      } else {
+        let obj = {
+          defaultName: modelDataInfo.defaultName,
+          name: modelDataInfo.name,
+          imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
+          initW: 80,
+          initH: 80,
+          x: 302+(clickBoxIndex.value*131),
+          y: 520,
+          w: 80,
+          h: 80,
+          towards: 0,
+          active: true,
+          draggable: true,
+          resizable: false,
+        }
+        context.emit('addModelData',obj)
+        show.value = false
       }
-      context.emit('addModelData',obj)
-      show.value = false
     }
+    
     // 获取图片
     /**
      * @description: 获取图片
@@ -139,6 +158,7 @@ export default {
       ROLE_STYLE,
       currentColorIndex,
       currenStyleIndex,
+      modelDataInfo,
       showModal,
       hideModal,
       getImgUrl,
