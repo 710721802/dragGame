@@ -4,15 +4,6 @@ $bk_blur: #031428;
   width: 100vw;
   height: 100vh;
   background-color: $bk_blur;
-  .center-stage{
-    width: 620px;
-    height: 620px;
-    border-radius: 50%;
-    left: 50%;
-    margin-left: -310px;
-    position: absolute;
-    background-color: #fff;
-  }
   .game-box{
     position: relative;
     z-index: 1;
@@ -23,9 +14,24 @@ $bk_blur: #031428;
     width: 966px;
     height: 622px;
     margin: 0 auto;
+    background-size: 100% 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    .center-stage{
+      width: 620px;
+      height: 620px;
+      border-radius: 50%;
+      left: 50%;
+      margin-left: -310px;
+      position: absolute;
+      background-color: #fff;
+    }
     .top-box {
       background: linear-gradient(#031429, #0B3972);
       padding: 15px 20px;
+      position: relative;
+      z-index: 2;
     }
     .top-btns-box{
       display: flex;

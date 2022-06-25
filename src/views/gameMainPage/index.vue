@@ -1,14 +1,14 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-24 00:50:46
+ * @LastEditTime: 2022-06-25 17:06:30
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
   <div class="gameMainPage">
     <TopUserinfo></TopUserinfo>
-    <div class="center-stage"></div>
-    <div class="game-box">
+    <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
+      <div class="center-stage"></div>
       <Vue3DraggableResizable
         class="dragBoxItem"
         style="z-index: 3;"
@@ -124,13 +124,17 @@ import { ref } from '@vue/reactivity'
 import { watch, watchEffect } from '@vue/runtime-core'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
-import { ADD_MODEL_BOX_LIST } from './data'
+import { ADD_MODEL_BOX_LIST, IMG_DATA } from './data'
+import { useRoute } from 'vue-router'
 export default {
   components: {
     TopUserinfo,
     addModel,
   },
   setup () {
+    const route = useRoute()
+    console.log( route.query)
+    const bkImgIndex = route.query.bkImgindex
     // 添加模型弹框
     const addModelModal = ref(null)
     const gameStepNumber = ref(0)
@@ -188,6 +192,7 @@ export default {
     ])
     // 底部模型添加框
     const addModelBoxList = ref(ADD_MODEL_BOX_LIST)
+    const imgData = ref(IMG_DATA)
 
     // 获取图片
     /**
@@ -347,12 +352,14 @@ export default {
       console.log(111111,modelImgDataList.value)
     })
     return {
+      bkImgIndex,
       gameStepNumber,
       stepInfo,
       modelImgDataList,
       currentModelImgIndex,
       addModelModal,
       addModelBoxList,
+      imgData,
       isAllAtStage,
       isAddFinish,
       isGoNext,
