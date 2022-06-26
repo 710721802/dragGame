@@ -1,13 +1,41 @@
 /*
  * @Date: 2022-06-18 22:07:58
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-25 16:29:09
+ * @LastEditTime: 2022-06-26 00:53:16
  * @FilePath: \zb\src\views\gameMainPage\data.js
  */
+let STEP = [
+  {
+    value: '角色',
+    key: 0
+  },
+  {
+    value: '情绪',
+    key: 1
+  },
+  {
+    value: '人际关系',
+    key: 2
+  },
+  {
+    value: '心境属性',
+    key: 3
+  },
+  {
+    value: '生理',
+    key: 4
+  },
+  {
+    value: '环境',
+    key: 5
+  },
+]
+
 let ADD_MODEL_BOX_LIST = [
   [
     {
-      defaultName: '主角'
+      defaultName: '主角',
+      showAdd: true,
     }
   ],
   [
@@ -115,4 +143,5 @@ let IMG_DATA = [
 export {
   ADD_MODEL_BOX_LIST,
   IMG_DATA,
+  STEP,
 }

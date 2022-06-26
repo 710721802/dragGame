@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-25 17:06:30
+ * @LastEditTime: 2022-06-26 01:08:51
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -121,10 +121,9 @@
 
 <script>
 import { ref } from '@vue/reactivity'
-import { watch, watchEffect } from '@vue/runtime-core'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
-import { ADD_MODEL_BOX_LIST, IMG_DATA } from './data'
+import { ADD_MODEL_BOX_LIST, IMG_DATA, STEP } from './data'
 import { useRoute } from 'vue-router'
 export default {
   components: {
@@ -133,7 +132,6 @@ export default {
   },
   setup () {
     const route = useRoute()
-    console.log( route.query)
     const bkImgIndex = route.query.bkImgindex
     // 添加模型弹框
     const addModelModal = ref(null)
@@ -145,51 +143,11 @@ export default {
     // 是否可点击下一步
     const isGoNext = ref(false)
     const showFinishBtn = ref(false)
-    const stepInfo = ref([
-      {
-        value: '角色',
-        key: 0
-      },
-      {
-        value: '情绪',
-        key: 1
-      },
-      {
-        value: '人际关系',
-        key: 2
-      },
-      {
-        value: '心境属性',
-        key: 3
-      },
-      {
-        value: '生理',
-        key: 4
-      },
-      {
-        value: '环境',
-        key: 5
-      },
-    ])
+    const stepInfo = ref(STEP)
     // 可拖拽模型图片数据
     const currentModelImgIndex = ref(null)
     // 所有添加进来的模型数据
-    const modelImgDataList = ref([
-      {
-        name: 'name',
-        imgUrl: `images/model/红色/俯视/中年男`,
-        initW: 100,
-        initH: 100,
-        x: 302,
-        y: 520,
-        w: 100,
-        h: 100,
-        towards: 0,
-        active: true,
-        draggable: true,
-        resizable: false,
-      }
-    ])
+    const modelImgDataList = ref([])
     // 底部模型添加框
     const addModelBoxList = ref(ADD_MODEL_BOX_LIST)
     const imgData = ref(IMG_DATA)
@@ -214,10 +172,8 @@ export default {
         // 拖拽开始
         case val === 'drag-start':
           currentModelImgIndex.value = index
-          // console.log(modelImgDataList.value[index]);
           modelBeginCoords.x = modelImgDataList.value[index].x
           modelBeginCoords.y = modelImgDataList.value[index].y
-          console.log('drag-start')
           break
 
         // 拖拽中
@@ -227,7 +183,7 @@ export default {
         // 拖拽结束
 
         case val === 'drag-end':
-          if(obj.x > 700 || obj.x < 170 || obj.y < 125 || obj.y > 420) {
+          if(obj.x > 700 || obj.x < 170 || obj.y < 130 || obj.y > 440) {
             modelImgDataList.value[index].x = modelBeginCoords.x
             modelImgDataList.value[index].y = modelBeginCoords.y
           }
@@ -341,16 +297,6 @@ export default {
     const handelFinish = () => {
       console.log('handelFinish')
     }
-
-    watch(
-      () => modelImgDataList.value,
-      (newValue, oldValue) => {
-          console.log('state watch', newValue, oldValue)
-      }
-    )
-    watchEffect(() => {
-      console.log(111111,modelImgDataList.value)
-    })
     return {
       bkImgIndex,
       gameStepNumber,

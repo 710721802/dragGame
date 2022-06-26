@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-24 00:29:08
+ * @LastEditTime: 2022-06-26 00:00:06
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -126,8 +126,8 @@ export default {
           imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
           initW: 80,
           initH: 80,
-          x: 302+(clickBoxIndex.value*131),
-          y: 520,
+          x: 310+(clickBoxIndex.value*131),
+          y: 534,
           w: 80,
           h: 80,
           towards: 0,

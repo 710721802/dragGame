@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-01 14:04:39
- * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-21 17:20:28
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-25 23:31:49
  * @FilePath: \zb\src\router\index.js
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -50,6 +50,12 @@ const routes = [
     path: '/selectBackGround',
     name: 'SelectBackGround',
     component: () => import(/* webpackChunkName: "start" */ '@/views/selectBackGround/index.vue')
+  },
+  // 结果页
+  {
+    path: '/result',
+    name: 'Result',
+    component: () => import(/* webpackChunkName: "start" */ '@/views/result/index.vue')
   },
 ]
 const router = createRouter({
