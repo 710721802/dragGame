@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-25 23:18:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-26 00:35:37
+ * @LastEditTime: 2022-06-27 00:18:05
  * @FilePath: \zb\src\views\result\index.vue
 -->
 <template>
@@ -19,6 +19,7 @@
         <van-button
           class="btn okBtn"
           type="primary"
+          @click="goTo('Start')"
         >
           确认
         </van-button>
@@ -40,12 +41,23 @@
 
 <script>
 import TopUserinfo from '@/components/TopUserInfo.vue'
+import { useRouter } from 'vue-router'
 export default {
   components: {
     TopUserinfo,
   },
   setup () {
-    return {}
+    const router = useRouter()
+    const goTo = (path) => {
+      router.push(
+        {
+          path: path
+        }
+      )
+    }
+    return {
+      goTo,
+    }
   }
 }
 </script>

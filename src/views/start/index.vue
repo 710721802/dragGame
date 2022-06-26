@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 16:47:33
- * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-21 17:33:44
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-27 00:23:06
  * @FilePath: \zb\src\views\start\index.vue
 -->
 <template>
@@ -19,8 +19,22 @@
       >
         开始
       </van-button>
-      <van-button type="primary" class="btn" size="large">查看报告</van-button>
-      <van-button type="primary" class="btn" size="large">退出</van-button>
+      <van-button
+        type="primary"
+        class="btn"
+        size="large"
+        @click="goTo('Result')"
+      >
+        查看报告
+      </van-button>
+      <van-button
+        type="primary"
+        class="btn"
+        size="large"
+        @click="goTo('Login')"
+      >
+        退出
+      </van-button>
     </div>
   </div>
 </template>

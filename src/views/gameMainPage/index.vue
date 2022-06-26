@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-26 01:08:51
+ * @LastEditTime: 2022-06-27 00:12:30
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -9,6 +9,7 @@
     <TopUserinfo></TopUserinfo>
     <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
       <div class="center-stage"></div>
+      <!-- 模型 -->
       <Vue3DraggableResizable
         class="dragBoxItem"
         style="z-index: 3;"
@@ -38,6 +39,7 @@
         </div>
         <img style="width:60%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
       </Vue3DraggableResizable>
+      <!-- 顶部 -->
       <div class="top-box">
         <div class="top-btns-box">
           <van-button
@@ -124,7 +126,7 @@ import { ref } from '@vue/reactivity'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
 import { ADD_MODEL_BOX_LIST, IMG_DATA, STEP } from './data'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 export default {
   components: {
     TopUserinfo,
@@ -132,6 +134,7 @@ export default {
   },
   setup () {
     const route = useRoute()
+    const router = useRouter()
     const bkImgIndex = route.query.bkImgindex
     // 添加模型弹框
     const addModelModal = ref(null)
@@ -244,20 +247,6 @@ export default {
         })
       }
     }
-
-    /**
-     * @description: 跳转编辑模型
-     * @param {*} index
-     * @return {*}
-     */
-    const goEditAddModel = index => {
-      router.push({
-        name: 'AddModel',
-        params: {
-          index: index,
-        }
-      })
-    }
     
     /**
      * @description: 添加编辑模型
@@ -295,7 +284,12 @@ export default {
      * @return {void}
      */
     const handelFinish = () => {
-      console.log('handelFinish')
+      router.push({
+        name: 'Result',
+        // params: {
+        //   index: index,
+        // }
+      })
     }
     return {
       bkImgIndex,
@@ -314,7 +308,6 @@ export default {
       getImgUrl,
       draggableClick,
       addModelData,
-      goEditAddModel,
       goEditaddModelData,
       rotateRole,
       handelNextStep,
