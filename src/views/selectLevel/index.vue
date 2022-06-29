@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 23:37:48
  * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-21 16:45:09
+ * @LastEditTime: 2022-06-21 17:34:02
  * @FilePath: \zb\src\views\selectLevel\index.vue
 -->
 <template>
@@ -21,18 +21,29 @@
       </ul>
     </div>
     <div class="beginBtnBox">
-      <img src="@/assets/gameSection/begin.png" alt="">
+      <img src="@/assets/gameSection/begin.png" @click="goTo('SelectBackGround')" alt="">
     </div>
   </div>
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 export default {
   components: {
     TopUserinfo,
   },
   setup () {
+    const router = useRouter()
+    const goTo = (path) => {
+      router.push(
+        {
+          path: path
+        }
+      )
+    }
+
+    
 
     /**
      * @description: 进入游戏
@@ -48,6 +59,7 @@ export default {
 
     return {
       goToGame,
+      goTo,
     }
   }
 }

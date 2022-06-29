@@ -8,6 +8,8 @@
   --van-step-icon-size: 20px;
   --van-background-color-light: none;
   --van-step-finish-line-color:#FFA617;
+  --white: #fff;
+  --van-dialog-background-color: var(--white);
 }
 .btn{
   border: none;
@@ -27,4 +29,7 @@
 }
 .van-icon-checked:before{
   display: none;
+}
+.van-dialog {
+  background: #fff !important;
 }

@@ -1,15 +1,17 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-20 21:59:02
+ * @LastEditTime: 2022-06-27 00:12:30
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
   <div class="gameMainPage">
     <TopUserinfo></TopUserinfo>
-    <div class="center-stage"></div>
-    <div class="game-box">
+    <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
+      <div class="center-stage"></div>
+      <!-- 模型 -->
       <Vue3DraggableResizable
+        class="dragBoxItem"
         style="z-index: 3;"
         v-for="(item, index) in modelImgDataList"
         :key="index"
@@ -32,8 +34,12 @@
         @resize-end="print('resize-end')"
         @click="draggableClick(index)"
       >
-        <img style="width:100%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
+        <div class="name">
+          {{item.name}} - {{item.defaultName}}
+        </div>
+        <img style="width:60%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
       </Vue3DraggableResizable>
+      <!-- 顶部 -->
       <div class="top-box">
         <div class="top-btns-box">
           <van-button
@@ -46,7 +52,23 @@
             {{item.value}}
           </van-button>
           <span class="line"></span>
-          <van-button round type="primary">完成</van-button>
+          <van-button
+            round
+            type="primary"
+            @click="handelFinish"
+            v-if="showFinishBtn"
+          >
+            完成
+          </van-button>
+          <van-button
+            round
+            type="primary"
+            :disabled="!isGoNext"
+            @click="handelNextStep"
+            v-else
+          >
+            下一步
+          </van-button>
         </div>
         <!-- 步骤线 -->
         <van-steps :active="gameStepNumber">
@@ -75,11 +97,18 @@
         <div class="right">
           <div
             class="item"
-            v-for="(item, index) in 5"
+            v-for="(item, index) in addModelBoxList[gameStepNumber]"
             :key="index"
-            @click="goEditaddModelData(index)"
           >
-            <img src="@/assets/game/imgBk.png" alt="">
+            <span class="name" v-show="item.showAdd">
+              {{item.defaultName}}
+            </span>
+            <img
+              v-show="item.showAdd"
+              @click="goEditaddModelData(index, item)"
+              src="@/assets/game/imgBk.png"
+              alt=""
+            >
           </div>
         </div>
       </div>
@@ -93,63 +122,38 @@
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity'
+import { ref } from '@vue/reactivity'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
+import { ADD_MODEL_BOX_LIST, IMG_DATA, STEP } from './data'
+import { useRoute, useRouter } from 'vue-router'
 export default {
   components: {
     TopUserinfo,
     addModel,
   },
   setup () {
+    const route = useRoute()
+    const router = useRouter()
+    const bkImgIndex = route.query.bkImgindex
     // 添加模型弹框
     const addModelModal = ref(null)
-    const gameStepNumber = ref(2)
-    const stepInfo = ref([
-      {
-        value: '角色',
-        key: 0
-      },
-      {
-        value: '情绪',
-        key: 1
-      },
-      {
-        value: '人际关系',
-        key: 2
-      },
-      {
-        value: '心境属性',
-        key: 3
-      },
-      {
-        value: '生理',
-        key: 4
-      },
-      {
-        value: '环境',
-        key: 5
-      },
-    ])
+    const gameStepNumber = ref(0)
+    // 每一步的模型是否添加完成
+    const isAddFinish = ref(false)
+    // 是否全部拖入舞台
+    const isAllAtStage = ref(false)
+    // 是否可点击下一步
+    const isGoNext = ref(false)
+    const showFinishBtn = ref(false)
+    const stepInfo = ref(STEP)
     // 可拖拽模型图片数据
     const currentModelImgIndex = ref(null)
     // 所有添加进来的模型数据
-    const modelImgDataList = ref([
-      {
-        name: 'name',
-        imgUrl: `images/model/红色/俯视/中年男`,
-        initW: 100,
-        initH: 100,
-        x: 302,
-        y: 520,
-        w: 100,
-        h: 100,
-        towards: 0,
-        active: true,
-        draggable: true,
-        resizable: false,
-      }
-    ])
+    const modelImgDataList = ref([])
+    // 底部模型添加框
+    const addModelBoxList = ref(ADD_MODEL_BOX_LIST)
+    const imgData = ref(IMG_DATA)
 
     // 获取图片
     /**
@@ -167,29 +171,51 @@ export default {
       y: 0
     }
     const print = (val, obj, index) => {
-      
       switch (true) {
         // 拖拽开始
         case val === 'drag-start':
           currentModelImgIndex.value = index
-          console.log(modelImgDataList.value[index]);
           modelBeginCoords.x = modelImgDataList.value[index].x
           modelBeginCoords.y = modelImgDataList.value[index].y
-        console.log('drag-start')
-        break
+          break
+
         // 拖拽中
         case val === 'dragging':
-          console.log(modelBeginCoords)
-          console.log('dragging')
-        break
+          // console.log('dragging')
+          break
         // 拖拽结束
+
         case val === 'drag-end':
-          if(obj.x > 700 || obj.x < 170 || obj.y < 125 || obj.y > 420) {
+          if(obj.x > 700 || obj.x < 170 || obj.y < 130 || obj.y > 440) {
             modelImgDataList.value[index].x = modelBeginCoords.x
             modelImgDataList.value[index].y = modelBeginCoords.y
           }
-        console.log('drag-end', index)
-        break
+          // 拖拽模型，如果都在圆盘中，并且这一步骤的所有模型已添加 >> 可进行下一步
+          // 模型是否添加完成
+          isAddFinish.value = true
+          addModelBoxList.value[gameStepNumber.value].forEach((item) => {
+            if(item.showAdd == true){
+              isAddFinish.value = false
+            }
+          })
+          // 是否全部拖入舞台
+          isAllAtStage.value = true
+          modelImgDataList.value.forEach((item) => {
+            if(item.y > 418){
+              isAllAtStage.value = false
+            }
+          })
+          
+          isGoNext.value = isAddFinish.value && isAllAtStage.value
+          // 如果是人际关系，则只需拖动一个模型就可以进行下一步
+          if (gameStepNumber.value == 2) {
+            isGoNext.value = true
+          }
+          // 如果是最后一部，切满足下一步条件，就可以点击完成
+          if (gameStepNumber.value == 5 && isAllAtStage.value) {
+            showFinishBtn.value = true
+          }
+          break
 
       }
     }
@@ -214,138 +240,83 @@ export default {
       if(obj){
         modelImgDataList.value = [...modelImgDataList.value, obj]
       }
+      // 如果是第六步环境，只让选择一个模型加入
+      if (gameStepNumber.value == 5) {
+        addModelBoxList.value[5].forEach(item => {
+          item.showAdd = false
+        })
+      }
     }
-
-    /**
-     * @description: 跳转编辑模型
-     * @param {*} index
-     * @return {*}
-     */
-    const goEditAddModel = index => {
-      router.push({
-        name: 'AddModel',
-        params: {
-          index: index,
-        }
-      })
-    }
-
     
     /**
      * @description: 添加编辑模型
      * @param {*} index
      * @return {*}
      */
-    const goEditaddModelData = (index) => {
-      addModelModal.value.showModal(index)
+    const goEditaddModelData = (index, item) => {
+      addModelModal.value.showModal(index, item)
+      addModelBoxList.value[gameStepNumber.value][index].showAdd = false
     }
 
+    /**
+     * @description: 旋转模型
+     * @param {number} val 每一步旋转角度
+     * @return {void}
+     */
     const rotateRole = val => {
       modelImgDataList.value[currentModelImgIndex.value].towards += val
       if(modelImgDataList.value[currentModelImgIndex.value].towards >= 360 || modelImgDataList.value[currentModelImgIndex.value].towards <= -360){
         modelImgDataList.value[currentModelImgIndex.value].towards = 0
       }
-      console.log(modelImgDataList.value[currentModelImgIndex.value].towards)
     }
 
-    addModelData()
+    /**
+     * @description: 下一步
+     * @return {void}
+     */
+    const handelNextStep = () => {
+      gameStepNumber.value++
+      isGoNext.value = false
+    }
+
+    /**
+     * @description: 提交数据-完成-返回结果
+     * @return {void}
+     */
+    const handelFinish = () => {
+      router.push({
+        name: 'Result',
+        // params: {
+        //   index: index,
+        // }
+      })
+    }
     return {
+      bkImgIndex,
       gameStepNumber,
       stepInfo,
       modelImgDataList,
       currentModelImgIndex,
       addModelModal,
+      addModelBoxList,
+      imgData,
+      isAllAtStage,
+      isAddFinish,
+      isGoNext,
+      showFinishBtn,
       print,
       getImgUrl,
       draggableClick,
       addModelData,
-      goEditAddModel,
       goEditaddModelData,
       rotateRole,
+      handelNextStep,
+      handelFinish,
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$bk_blur: #031428;
-.gameMainPage{
-  color: #fff;
-  width: 100vw;
-  height: 100vh;
-  background-color: $bk_blur;
-  .center-stage{
-    width: 620px;
-    height: 620px;
-    border-radius: 50%;
-    left: 50%;
-    margin-left: -310px;
-    position: absolute;
-    background-color: #fff;
-  }
-  .game-box{
-    position: relative;
-    z-index: 1;
-    border: 2px solid #fff;
-    box-sizing: border-box;
-    // width: calc(100% - 52px);
-    // min-height: calc(100% - 145px);
-    width: 966px;
-    height: 622px;
-    margin: 0 auto;
-    .top-box {
-      background: linear-gradient(#031429, #0B3972);
-      padding: 15px 20px;
-    }
-    .top-btns-box{
-      display: flex;
-      justify-content: space-between;
-      .line {
-        display: inline-block;
-        width: 2px;
-        height: 44px;
-        background-color: #fff;
-      }
-      .van-button--normal{
-        font-size: 16px;
-        min-width: 102px;
-      }
-    }
-    .bottom-box {
-      width: 100%;
-      height: 100px;
-      background: #00152E;
-      position: absolute;
-      bottom: 0;
-      display: flex;
-      justify-content: space-between;
-      .left {
-        display: flex;
-        align-items: center;
-        
-        .add {
-          margin: 0 20px 0 20px;
-        }
-        .center {
-          margin-right: 20px;
-        }
-        .subtract {
-          margin-right: 20px;
-        }
-      }
-      .right {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        .item {
-          font-size: 0;
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-  
-}
-
+@import "./scss/index.scss";
 </style>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-01 14:04:39
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-16 23:37:30
+ * @LastEditTime: 2022-06-25 23:31:49
  * @FilePath: \zb\src\router\index.js
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -44,6 +44,18 @@ const routes = [
     path: '/selectLevel',
     name: 'SelectLevel',
     component: () => import(/* webpackChunkName: "start" */ '@/views/selectLevel/index.vue')
+  },
+  // 选择背景
+  {
+    path: '/selectBackGround',
+    name: 'SelectBackGround',
+    component: () => import(/* webpackChunkName: "start" */ '@/views/selectBackGround/index.vue')
+  },
+  // 结果页
+  {
+    path: '/result',
+    name: 'Result',
+    component: () => import(/* webpackChunkName: "start" */ '@/views/result/index.vue')
   },
 ]
 const router = createRouter({
