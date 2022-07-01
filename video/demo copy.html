@@ -1,0 +1,170 @@
+<!--
+ * @Date: 2022-06-18 14:36:31
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-06-29 00:32:45
+ * @FilePath: \video\demo.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>video</title>
+</head>
+<style>
+	*{
+		padding: 0;
+		margin: 0;touch-action: none;
+	}
+  body {
+    overflow: hidden;
+  }
+	canvas{width: 100vw;height: 100vh;}
+	video{display: none}
+  .layout , .hengshuping {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgb(23, 23, 209);
+    transition: all .6s;
+  }
+  .layout{
+    z-index: 1;
+  }
+  .layout .tipWord,
+  .hengshuping .tipWord
+  {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+  }
+  .layout.hide {
+    opacity: 0;
+  }
+  .clickBtnBox {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+  }
+  .clickBtnBox.show{
+    display: block;
+  }
+  .clickBtnBox a {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 20vh;
+    left: 30vw;
+    background: url('./icon-btn.png') no-repeat center center;
+    background-size: 100% 100%;
+  }
+</style>
+<body>
+  <div class="layout">
+    <div class="tipWord">点击屏幕任意位置播放视频</div>
+  </div>
+  <div class="hengshuping">
+    <div class="tipWord">为了您的更好的体验，请横屏观看</div>
+  </div>
+  <div class="clickBtnBox">
+    <a href="https://www.baidu.com/" target="_blank" style="top: 54vh;left: 52.5vw;"></a>
+    <a href="https://www.baidu.com/" target="_blank" style="top: 50vh;left: 25vw;"></a>
+    <a href="https://www.baidu.com/" target="_blank" style="top: 76vh;left: 20vw;"></a>
+    <a href="https://www.baidu.com/" target="_blank" style="top: 50vh;left: 76vw;"></a>
+  </div>
+  <video
+    src="01.mp4"
+    id="video1"
+    width="820"
+    height="240"
+    autoplay
+    controls="controls"
+    x5-playsinline
+    playsinline="true"
+    x-webkit-airplay="true"
+    x5-video-player-type="h5"
+  ></video>
+	<canvas id="myCanvas"></canvas>
+</body>
+<script src="./jquery.min.js"></script>
+<script>
+	var timer=null;
+  var video=document.getElementById('video1');
+  var canvas = document.getElementById("myCanvas");
+  var context = canvas.getContext("2d");
+  canvas.width = window.innerWidth*2;  //获取屏幕宽度作为canvas的宽度  这个设置的越大，画面越清晰（相当于绘制的图像大，然后被css缩小）
+  canvas.height = window.innerHeight*2; 
+  function draw1() {//绘制视频
+      video.play();
+      timer = setInterval(function(){
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);//绘制视频
+      },50);
+  };
+  var isplay=false;//视频播放状态
+  video.addEventListener('loadedmetadata', function () {
+    console.log(video.duration);
+  });
+  video.addEventListener('playing', function () {
+  }, false);
+  let isloop = false
+  video.addEventListener('ended', function () {
+    if (!isloop) {
+      $("#video1").attr('src','02.mp4')
+      $("#video1").attr('loop', true)
+      isloop = true
+    }
+    video.play();
+    $('.clickBtnBox').addClass('show')
+  }, false);
+  $('.layout').click(function(event){
+    event.stopPropagation()
+    if(orient()) {
+      video.play();
+      $(this).addClass('hide')
+      isplay = true
+      draw1();
+    }
+  })
+  function orient() {
+    if (window.orientation == 0 || window.orientation == 180) {
+      $('.hengshuping').show()
+      return false;
+    }
+    else if (window.orientation == 90 || window.orientation == -90) {
+      $('.hengshuping').hide()
+      return true;
+    }
+  }
+  orient()
+  $(window).bind( 'orientationchange', function(e){
+    console.log(orient())
+    console.log(isplay,'isplay');
+    // if(isplay) {
+    //   $('.layout').addClass('hide')
+    // }
+    if(orient() && !isplay) {
+      console.log(11111);
+      video.play()
+      isplay = true
+      $('.hengshuping').hide()
+      draw1();
+    } else {
+      $('.hengshuping').show()
+      video.pause()
+      isplay = false
+    }
+  });
+</script>
+</html>
