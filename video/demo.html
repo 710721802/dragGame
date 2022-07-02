@@ -1,8 +1,8 @@
 <!--
  * @Date: 2022-06-18 14:36:31
- * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-07-01 18:14:36
- * @FilePath: \video\demo.html
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-07-02 01:15:51
+ * @FilePath: \zb\video\demo.html
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>video</title>
+  <link rel="stylesheet" href="./font/iconfont.css">
 </head>
 <style>
 	*{
@@ -40,30 +41,55 @@
     right: 0;
     top: 50%;
     margin-top: -28.4vw;
+    display: none;
   }
   .clickBtnBox.show{
     display: block;
   }
   .clickBtnBox a {
     display: block;
-    width: 3vw;
+    width: 3.5vw;
     height: 3vw;
-    border-radius: 50%;
     position: absolute;
     background: url('./icon-btn.png') no-repeat center center;
     background-size: 100% 100%;
   }
+  .handleVoice{
+    position: fixed;
+    z-index: 2;
+    top: 20px;
+    right: 20px;
+    font-size: 26px;
+    color: aqua;
+  }
+  .heart{
+    animation: heart 1.3s ease-in-out 2.7s infinite alternate;
+  }
+  @keyframes heart{
+    from{transform:translate(0,0)}
+    to{transform:translate(0,10px)}
+  }
+  .handleNext{
+    position: fixed;
+    z-index: 2;
+    bottom: 20px;
+    right: 20px;
+    font-size: 16px;
+    color: aqua;
+  }
 </style>
 <body>
-  <button>打开声音</button>
+  <span class="icon iconfont icon-yinlianglabashengyin handleVoice"></span>
+  <span class="handleNext">跳过</span>
   <div class="clickBtnBox">
-    <a href="https://www.baidu.com/" target="_blank" style="top: 9vw;left: 52.5vw;"></a>
-    <a href="https://www.baidu.com/" target="_blank" style="top: 28vw;left: 36vw;">2</a>
-    <a href="https://www.baidu.com/" target="_blank" style="top: 76vw;left: 20vw;"></a>
-    <a href="https://www.baidu.com/" target="_blank" style="top: 50vw;left: 76vw;"></a>
+    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 9vw;left: 52.5vw;"></a>
+    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 26vw;left: 36vw;"></a>
+    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 12vw;left: 18vw;"></a>
+    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 46vw;left: 11vw;"></a>
+    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 12vw;left: 80vw;"></a>
   </div>
   <video
-    src="02.mp4"
+    src="01.mp4"
     id="video1"
     muted
     autoplay
@@ -72,21 +98,44 @@
     x-webkit-airplay="true"
     x5-video-player-type="h5"
   ></video>
-	<canvas id="myCanvas"></canvas>
 </body>
 <script src="./jquery.min.js"></script>
 <script>
-  
-var video=document.getElementById('video1')
 let isloop = false
-video.addEventListener('ended', function () {
+var video=document.getElementById('video1')
+/**
+ * @description: 开关声音
+ * @return {void}
+ */
+function handleVoice() {
+  video.muted = !video.muted
+  if(video.muted){
+    $(this).removeClass('icon-24gf-volumeDisable')
+    $(this).addClass('icon-yinlianglabashengyin')
+    
+  } else {
+    $(this).removeClass('icon-yinlianglabashengyin')
+    $(this).addClass('icon-24gf-volumeDisable')
+  }
+}
+/**
+ * @description: 切换至第二个视频
+ * @return {void}
+ */
+function handleNextVideo() {
   if (!isloop) {
     $("#video1").attr('src','02.mp4')
     $("#video1").attr('loop', true)
     isloop = true
   }
-  video.play();
+  $('.handleNext').hide()
   $('.clickBtnBox').addClass('show')
-}, false)
+}
+
+$('.handleVoice').click(handleVoice)
+$('.handleNext').click(function () {
+  handleNextVideo()
+})
+video.addEventListener('ended', handleNextVideo, false)
 </script>
 </html>

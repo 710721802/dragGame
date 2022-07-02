@@ -1,0 +1,23 @@
+{
+  "id": "3495080",
+  "name": "临时",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6129236",
+      "name": "194音量、喇叭、声音",
+      "font_class": "yinlianglabashengyin",
+      "unicode": "e7b5",
+      "unicode_decimal": 59317
+    },
+    {
+      "icon_id": "7592577",
+      "name": "24gf-volumeDisable",
+      "font_class": "24gf-volumeDisable",
+      "unicode": "ea0f",
+      "unicode_decimal": 59919
+    }
+  ]
+}
