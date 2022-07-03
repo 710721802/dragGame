@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-18 14:36:31
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-02 01:15:51
+ * @LastEditTime: 2022-07-03 14:10:53
  * @FilePath: \zb\video\demo.html
 -->
 <!DOCTYPE html>
@@ -46,13 +46,21 @@
   .clickBtnBox.show{
     display: block;
   }
-  .clickBtnBox a {
+  .clickBtnBox .heart {
     display: block;
     width: 3.5vw;
     height: 3vw;
     position: absolute;
     background: url('./icon-btn.png') no-repeat center center;
     background-size: 100% 100%;
+  }
+  .clickEnterBtn {
+    display: block;
+    font-size: 2.4vw;
+    font-weight: bold;
+    font-style: italic;
+    color: #fff;
+    position: absolute;
   }
   .handleVoice{
     position: fixed;
@@ -78,15 +86,16 @@
     color: aqua;
   }
 </style>
-<body>
-  <span class="icon iconfont icon-yinlianglabashengyin handleVoice"></span>
+<body oncontextmenu=self.event.returnValue=false>
+  <span class="icon iconfont icon-24gf-volumeDisable handleVoice"></span>
   <span class="handleNext">跳过</span>
   <div class="clickBtnBox">
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 9vw;left: 52.5vw;"></a>
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 26vw;left: 36vw;"></a>
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 12vw;left: 18vw;"></a>
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 46vw;left: 11vw;"></a>
-    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 12vw;left: 80vw;"></a>
+    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 10vw;left: 68vw;"></a>
+    <a class="clickEnterBtn" href="https://www.baidu.com/" target="_blank" style="bottom: 10vw;left: 62vw;">点击进入</a>
   </div>
   <video
     src="01.mp4"
@@ -110,12 +119,12 @@ var video=document.getElementById('video1')
 function handleVoice() {
   video.muted = !video.muted
   if(video.muted){
-    $(this).removeClass('icon-24gf-volumeDisable')
-    $(this).addClass('icon-yinlianglabashengyin')
-    
-  } else {
     $(this).removeClass('icon-yinlianglabashengyin')
     $(this).addClass('icon-24gf-volumeDisable')
+    
+  } else {
+    $(this).removeClass('icon-24gf-volumeDisable')
+    $(this).addClass('icon-yinlianglabashengyin')
   }
 }
 /**
