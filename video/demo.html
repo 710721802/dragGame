@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-18 14:36:31
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-03 16:10:05
+ * @LastEditTime: 2022-07-03 23:08:26
  * @FilePath: \zb\video\demo.html
 -->
 <!DOCTYPE html>
@@ -88,6 +88,7 @@
     right: 20px;
     font-size: 16px;
     color: aqua;
+    cursor: pointer;
   }
 </style>
 <body oncontextmenu=self.event.returnValue=false>
@@ -105,6 +106,7 @@
   </div>
   <video
     src="01.mp4"
+    poster="./01first.jpg"
     id="video1"
     muted
     autoplay
@@ -138,6 +140,11 @@ function handleVoice() {
  * @return {void}
  */
 function handleNextVideo() {
+  $("#video1").attr('poster','./02first.jpg')
+  // video.currentTime = 32.5
+  // video.play()
+  // $('.handleNext').hide()
+  // $('.clickBtnBox').addClass('show')
   if (!isloop) {
     $("#video1").attr('src','02.mp4')
     $("#video1").attr('loop', true)
@@ -152,5 +159,11 @@ $('.handleNext').click(function () {
   handleNextVideo()
 })
 video.addEventListener('ended', handleNextVideo, false)
+video.addEventListener('timeupdate', function() {
+  // if(video.currentTime>27.5){
+  //   $('.handleNext').hide()
+  //   $('.clickBtnBox').addClass('show')
+  // }
+}, false)
 </script>
 </html>
