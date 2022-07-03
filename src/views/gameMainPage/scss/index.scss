@@ -7,30 +7,30 @@ $bk_blur: #031428;
   .game-box{
     position: relative;
     z-index: 1;
-    border: 2px solid #fff;
     box-sizing: border-box;
-    // width: calc(100% - 52px);
-    // min-height: calc(100% - 145px);
-    width: 966px;
+    min-height: calc(100% - 85px);
     height: 622px;
     margin: 0 auto;
-    background-size: 100% 80%;
+    background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
     .center-stage{
-      width: 620px;
-      height: 620px;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
-      left: 50%;
-      margin-left: -310px;
-      position: absolute;
       background-color: #fff;
     }
     .top-box {
       background: linear-gradient(#031429, #0B3972);
       padding: 15px 20px;
-      position: relative;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
       z-index: 2;
     }
     .top-btns-box{
