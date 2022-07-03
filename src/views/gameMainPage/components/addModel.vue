@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-26 00:00:06
+ * @LastEditTime: 2022-07-02 19:35:08
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -107,7 +107,9 @@ export default {
      * @return {*}
      */
     const showModal = (index, info) => {
+      console.log(info);
       modelDataInfo.defaultName = info.defaultName
+      modelDataInfo.name = info.defaultName
       clickBoxIndex.value = index
       show.value = true
     }
@@ -126,8 +128,8 @@ export default {
           imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
           initW: 80,
           initH: 80,
-          x: 310+(clickBoxIndex.value*131),
-          y: 534,
+          x: 210,
+          y: 210,
           w: 80,
           h: 80,
           towards: 0,

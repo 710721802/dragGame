@@ -1,44 +1,46 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-27 00:12:30
+ * @LastEditTime: 2022-07-02 18:20:26
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
   <div class="gameMainPage">
     <TopUserinfo></TopUserinfo>
     <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
-      <div class="center-stage"></div>
+      <div class="center-stage" :style="{transform: `scale(${stageWidthScale})`}">
+        <Vue3DraggableResizable
+          class="dragBoxItem"
+          style="z-index: 3;"
+          v-for="(item, index) in modelImgDataList"
+          :key="index"
+          :initW="item.initW"
+          :initH="item.initH"
+          v-model:x="item.x"
+          v-model:y="item.y"
+          v-model:w="item.w"
+          v-model:h="item.h"
+          :active="item.active"
+          :draggable="item.draggable"
+          :resizable="item.resizable"
+          @activated="print('activated')"
+          @deactivated="print('deactivated')"
+          @drag-start="print('drag-start', modelImgDataList[index], index)"
+          @drag-end="print('drag-end', modelImgDataList[index], index)"
+          @resize-start="print('resize-start')"
+          @dragging="print('dragging')"
+          @resizing="print('resizing')"
+          @resize-end="print('resize-end')"
+          @click="draggableClick(index)"
+        >
+          <div class="name">
+            {{item.name}} - {{item.defaultName}}
+          </div>
+          <img style="width:60%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
+        </Vue3DraggableResizable>
+      </div>
       <!-- 模型 -->
-      <Vue3DraggableResizable
-        class="dragBoxItem"
-        style="z-index: 3;"
-        v-for="(item, index) in modelImgDataList"
-        :key="index"
-        :initW="item.initW"
-        :initH="item.initH"
-        v-model:x="item.x"
-        v-model:y="item.y"
-        v-model:w="item.w"
-        v-model:h="item.h"
-        :active="item.active"
-        :draggable="item.draggable"
-        :resizable="item.resizable"
-        @activated="print('activated')"
-        @deactivated="print('deactivated')"
-        @drag-start="print('drag-start', modelImgDataList[index], index)"
-        @drag-end="print('drag-end', modelImgDataList[index], index)"
-        @resize-start="print('resize-start')"
-        @dragging="print('dragging')"
-        @resizing="print('resizing')"
-        @resize-end="print('resize-end')"
-        @click="draggableClick(index)"
-      >
-        <div class="name">
-          {{item.name}} - {{item.defaultName}}
-        </div>
-        <img style="width:60%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
-      </Vue3DraggableResizable>
+      
       <!-- 顶部 -->
       <div class="top-box">
         <div class="top-btns-box">
@@ -71,7 +73,7 @@
           </van-button>
         </div>
         <!-- 步骤线 -->
-        <van-steps :active="gameStepNumber">
+        <!-- <van-steps :active="gameStepNumber">
           <van-step></van-step>
           <van-step></van-step>
           <van-step></van-step>
@@ -79,7 +81,7 @@
           <van-step></van-step>
           <van-step></van-step>
           <van-step></van-step>
-        </van-steps>
+        </van-steps> -->
       </div>
       <!--  底部操作按钮 -->
       <div class="bottom-box">
@@ -127,6 +129,8 @@ import TopUserinfo from '@/components/TopUserInfo.vue'
 import addModel from "./components/addModel.vue"
 import { ADD_MODEL_BOX_LIST, IMG_DATA, STEP } from './data'
 import { useRoute, useRouter } from 'vue-router'
+import { onMounted } from '@vue/runtime-core'
+import { windowWidth } from 'vant/lib/utils'
 export default {
   components: {
     TopUserinfo,
@@ -135,6 +139,7 @@ export default {
   setup () {
     const route = useRoute()
     const router = useRouter()
+    const stageWidthScale = ref(1)
     const bkImgIndex = route.query.bkImgindex
     // 添加模型弹框
     const addModelModal = ref(null)
@@ -186,7 +191,12 @@ export default {
         // 拖拽结束
 
         case val === 'drag-end':
-          if(obj.x > 700 || obj.x < 170 || obj.y < 130 || obj.y > 440) {
+          console.log(obj.x,obj.y)
+          let dx = Math.abs(obj.x + 40 - 250)
+          let dy = Math.abs(obj.y + 40 - 250)
+          let dis = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2))
+          console.log(dis,'dis')
+          if(dis > 250) {
             modelImgDataList.value[index].x = modelBeginCoords.x
             modelImgDataList.value[index].y = modelBeginCoords.y
           }
@@ -291,7 +301,18 @@ export default {
         // }
       })
     }
+
+    const setStateSize = () => {
+      // let windowWidth = window.innerWidth
+      // stageWidthScale.value = window.innerWidth / 1920
+
+    }
+    onMounted(() => {
+      setStateSize()
+      window.onresize = setStateSize
+    })
     return {
+      stageWidthScale,
       bkImgIndex,
       gameStepNumber,
       stepInfo,
