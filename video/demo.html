@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-18 14:36:31
- * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-03 23:12:34
+ * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
+ * @LastEditTime: 2022-07-04 11:44:51
  * @FilePath: \zb\video\demo.html
 -->
 <!DOCTYPE html>
@@ -59,12 +59,13 @@
     width: 20vw;
     font-size: 2.4vw;
     font-weight: bold;
-    font-style: italic;
+    /* font-style: italic; */
     color: #fff;
     position: absolute;
+    display: flex;
   }
   .clickEnterBtn img {
-    width: 100%;
+    width: 4vw;
   }
   .handleVoice{
     position: fixed;
@@ -100,9 +101,11 @@
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 9vw;left: 13vw;"></a>
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 40vw;left: 9vw;"></a>
     <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 10vw;left: 79vw;"></a>
-    <a class="clickEnterBtn" href="https://www.baidu.com/" target="_blank" style="bottom: 1.4vw;left: 68vw;">
-      <img src="./dianji.png" alt="">
-    </a>
+    <div class="clickEnterBtn" style="bottom: 1.4vw;left: 68vw;">
+      <span>点击 "</span>
+      <span><img src="./icon-btn.png" alt=""></span>
+      <span>" 进入</span>
+    </div>
   </div>
   <video
     src="01.mp4"
