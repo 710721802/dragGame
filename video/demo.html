@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-18 14:36:31
  * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-07-04 11:44:51
+ * @LastEditTime: 2022-07-05 17:59:25
  * @FilePath: \zb\video\demo.html
 -->
 <!DOCTYPE html>
@@ -25,23 +25,33 @@
     background-color: #222;
   }
 	video {
-    width: 100%;
-    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     position:absolute;
     left:50%;
     top:50%;
     -webkit-transform:translate(-50%,-50%);
     transform:translate(-50%,-50%);
   }
+  .btnsBox {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .clickBtnBox {
-    position: fixed;
-    height: 56.25vw;
+    position: relative;
+
+    /* position: fixed; */
+    /* height: 56.25vw; */
     z-index: 1;
-    left: 0;
-    right: 0;
-    top: 50%;
-    margin-top: -28.4vw;
-    display: none;
+    /* left: 0; */
+    /* right: 0; */
+    /* top: 50%; */
+    /* margin-top: -28.4vw; */
+    /* display: none; */
   }
   .clickBtnBox.show{
     display: block;
@@ -95,20 +105,22 @@
 <body oncontextmenu=self.event.returnValue=false>
   <span class="icon iconfont icon-24gf-volumeDisable handleVoice"></span>
   <span class="handleNext">跳过</span>
-  <div class="clickBtnBox">
-    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 7vw;left: 51.5vw;"></a>
-    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 25.5vw;left: 34vw;"></a>
-    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 9vw;left: 13vw;"></a>
-    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 40vw;left: 9vw;"></a>
-    <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 10vw;left: 79vw;"></a>
-    <div class="clickEnterBtn" style="bottom: 1.4vw;left: 68vw;">
-      <span>点击 "</span>
-      <span><img src="./icon-btn.png" alt=""></span>
-      <span>" 进入</span>
+  <div class="btnsBox">
+    <div class="clickBtnBox">
+      <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 13%;left: 51.5%;"></a>
+      <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 43.5%;left: 34%;"></a>
+      <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 15%;left: 13%;"></a>
+      <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 72%;left: 9%;"></a>
+      <a class="heart" href="https://www.baidu.com/" target="_blank" style="top: 18%;left: 79%;"></a>
+      <div class="clickEnterBtn" style="bottom: 2.5%;left: 68%;">
+        <span>点击 "</span>
+        <span><img src="./icon-btn.png" alt=""></span>
+        <span>" 进入</span>
+      </div>
     </div>
   </div>
   <video
-    src="01.mp4"
+    src="02.mp4"
     poster="./01first.jpg"
     id="video1"
     muted
@@ -168,5 +180,13 @@ video.addEventListener('timeupdate', function() {
   //   $('.clickBtnBox').addClass('show')
   // }
 }, false)
+
+// 尺寸自适应 
+$('.clickBtnBox').height(video.clientHeight)
+$('.clickBtnBox').width(video.clientWidth)
+window.addEventListener('resize', function() {
+  $('.clickBtnBox').height(video.clientHeight)
+  $('.clickBtnBox').width(video.clientWidth)
+})
 </script>
 </html>
