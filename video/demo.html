@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-18 14:36:31
  * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-07-05 18:03:03
+ * @LastEditTime: 2022-07-06 10:28:08
  * @FilePath: \zb\video\demo.html
 -->
 <!DOCTYPE html>
@@ -113,7 +113,7 @@
     </div>
   </div>
   <video
-    src="01.mp4"
+    src="video.mp4"
     poster="./01first.jpg"
     id="video1"
     muted
@@ -147,31 +147,35 @@ function handleVoice() {
  * @description: 切换至第二个视频
  * @return {void}
  */
-function handleNextVideo() {
-  $("#video1").attr('poster','./02first.jpg')
-  // video.currentTime = 32.5
-  // video.play()
-  // $('.handleNext').hide()
-  // $('.clickBtnBox').addClass('show')
-  if (!isloop) {
-    $("#video1").attr('src','02.mp4')
-    $("#video1").attr('loop', true)
-    isloop = true
-  }
+function handleNextVideo(val) {
+  // $("#video1").attr('poster','./02first.jpg')
+  video.currentTime = val
+  video.play()
   $('.handleNext').hide()
   $('.clickBtnBox').addClass('show')
+  // if (!isloop) {
+  //   $("#video1").attr('src','02.mp4')
+  //   $("#video1").attr('loop', true)
+  //   isloop = true
+  // }
+  // $('.handleNext').hide()
+  // $('.clickBtnBox').addClass('show')
 }
 
 $('.handleVoice').click(handleVoice)
 $('.handleNext').click(function () {
-  handleNextVideo()
+  // handleNextVideo(27.67)
+  handleNextVideo(27.67)
 })
-video.addEventListener('ended', handleNextVideo, false)
+video.addEventListener('ended', function() {
+  handleNextVideo(34)
+}, false)
 video.addEventListener('timeupdate', function() {
-  // if(video.currentTime>27.5){
-  //   $('.handleNext').hide()
-  //   $('.clickBtnBox').addClass('show')
-  // }
+  console.log(video.currentTime)
+  if(video.currentTime>27.6){
+    $('.handleNext').hide()
+    $('.clickBtnBox').addClass('show')
+  }
 }, false)
 
 // 尺寸自适应 
