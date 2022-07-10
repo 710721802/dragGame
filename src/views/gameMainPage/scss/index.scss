@@ -33,6 +33,7 @@ $bk_blur: #031428;
       right: 0;
       top: 0;
       z-index: 2;
+      transition: all .5s;
       .top-btns-box {
         display: flex;
         justify-content: space-between;
@@ -74,6 +75,7 @@ $bk_blur: #031428;
       bottom: 0;
       display: flex;
       justify-content: space-between;
+      transition: all .5s;
       .left {
         display: flex;
         align-items: center;
@@ -145,4 +147,7 @@ $bk_blur: #031428;
     }
   }
   
+}
+.van-button--primary.current{
+  background: #0a4580;
 }

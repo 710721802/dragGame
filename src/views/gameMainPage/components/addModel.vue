@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-02 19:35:08
+ * @LastEditTime: 2022-07-11 00:04:44
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -89,6 +89,8 @@ export default {
   },
   setup (props, context) {
     const show = ref(false)
+    // 是否是编辑
+    const isEdit = ref(false)
     // 选中的颜色index
     const currentColorIndex = ref(0)
     // 选中的角色样式index
@@ -107,13 +109,24 @@ export default {
      * @return {*}
      */
     const showModal = (index, info) => {
-      console.log(info);
       modelDataInfo.defaultName = info.defaultName
       modelDataInfo.name = info.defaultName
       clickBoxIndex.value = index
       show.value = true
     }
     
+    /**
+     * @description: 编辑模型
+     * @param {*} index
+     * @param {*} info
+     * @return {*}
+     */
+    const editModel = (index) => {
+      isEdit.value = true
+      console.log(index)
+      show.value = true
+    }
+
     /**
      * @description: 关闭按钮
      * @return {*}
@@ -137,7 +150,12 @@ export default {
           draggable: true,
           resizable: false,
         }
-        context.emit('addModelData',obj)
+        if (!isEdit.value) {
+          context.emit('addModelData',obj)
+        } else {
+          isEdit.value = false
+          context.emit('editModelData',obj)
+        }
         show.value = false
       }
     }
@@ -156,12 +174,14 @@ export default {
 
     return {
       show,
+      isEdit,
       ROLE_COLOR,
       ROLE_STYLE,
       currentColorIndex,
       currenStyleIndex,
       modelDataInfo,
       showModal,
+      editModel,
       hideModal,
       getImgUrl,
     }

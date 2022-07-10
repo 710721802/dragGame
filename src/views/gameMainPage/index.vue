@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-10 16:11:08
+ * @LastEditTime: 2022-07-11 00:03:24
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -32,6 +32,8 @@
           @resizing="print('resizing')"
           @resize-end="print('resize-end')"
           @click="draggableClick(index)"
+          @dblclick="draggableDblclick(index)"
+          
         >
           <div class="name">
             {{item.name}} - {{item.defaultName}}
@@ -47,9 +49,11 @@
           <van-button
             round
             type="primary"
-            v-for="item in stepInfo"
+            v-for="(item, index) in stepInfo"
             :key="item.key"
-            :disabled="gameStepNumber !== item.key"
+            :disabled="item.isFinished"
+            @click="gameStepNumber = index"
+            :class="{current: index === gameStepNumber}"
           >
             {{item.value}}
           </van-button>
@@ -58,11 +62,11 @@
             round
             type="primary"
             @click="handelFinish"
-            v-if="showFinishBtn"
+            :disabled="!showFinishBtn"
           >
             完成
           </van-button>
-          <van-button
+          <!-- <van-button
             round
             type="primary"
             :disabled="!isGoNext"
@@ -70,7 +74,7 @@
             v-else
           >
             下一步
-          </van-button>
+          </van-button> -->
         </div>
         <div
           @click="isHideTop=!isHideTop"
@@ -98,9 +102,9 @@
             v-for="(item, index) in addModelBoxList[gameStepNumber]"
             :key="index"
           >
-            <span class="name" v-show="item.showAdd">
+            <!-- <span class="name" v-show="item.showAdd">
               {{item.defaultName}}
-            </span>
+            </span> -->
             <img
               v-show="item.showAdd"
               @click="goEditaddModelData(index, item)"
@@ -121,6 +125,7 @@
   <addModel
     ref="addModelModal"
     @addModelData="addModelData"
+    @editModelData="editModelData"
     :modelData="modelImgDataList"
   ></addModel>
 </template>
@@ -132,7 +137,6 @@ import addModel from "./components/addModel.vue"
 import { ADD_MODEL_BOX_LIST, IMG_DATA, STEP } from './data'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted } from '@vue/runtime-core'
-import { windowWidth } from 'vant/lib/utils'
 export default {
   components: {
     TopUserinfo,
@@ -146,13 +150,14 @@ export default {
     const isHideTop = ref(true)
     // 添加模型弹框
     const addModelModal = ref(null)
-    const gameStepNumber = ref(2)
+    const gameStepNumber = ref(0)
     // 每一步的模型是否添加完成
     const isAddFinish = ref(false)
     // 是否全部拖入舞台
     const isAllAtStage = ref(false)
     // 是否可点击下一步
-    const isGoNext = ref(false)
+    const isGoNext = ref(true)
+    // show 完成按钮
     const showFinishBtn = ref(false)
     const stepInfo = ref(STEP)
     // 可拖拽模型图片数据
@@ -161,6 +166,7 @@ export default {
     const modelImgDataList = ref([])
     // 底部模型添加框
     const addModelBoxList = ref(ADD_MODEL_BOX_LIST)
+    // 获取图片
     const imgData = ref(IMG_DATA)
 
     // 获取图片
@@ -174,17 +180,18 @@ export default {
         return require(`@/assets/${name}.png`) ? require(`@/assets/${name}.png`) : ''
       }
     }
-    let modelBeginCoords = {
-      x: 0,
-      y: 0
-    }
+    // 保存拖拽前的位置
+    // let modelBeginCoords = {
+    //   x: 0,
+    //   y: 0
+    // }
     const print = (val, obj, index) => {
       switch (true) {
         // 拖拽开始
         case val === 'drag-start':
           currentModelImgIndex.value = index
-          modelBeginCoords.x = modelImgDataList.value[index].x
-          modelBeginCoords.y = modelImgDataList.value[index].y
+          // modelBeginCoords.x = modelImgDataList.value[index].x
+          // modelBeginCoords.y = modelImgDataList.value[index].y
           break
 
         // 拖拽中
@@ -194,15 +201,14 @@ export default {
         // 拖拽结束
 
         case val === 'drag-end':
-          console.log(obj.x,obj.y)
-          let dx = Math.abs(obj.x + 40 - 250)
-          let dy = Math.abs(obj.y + 40 - 250)
-          let dis = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2))
-          console.log(dis,'dis')
-          if(dis > 250) {
-            modelImgDataList.value[index].x = modelBeginCoords.x
-            modelImgDataList.value[index].y = modelBeginCoords.y
-          }
+          // 超出圆盘>>拖拽失败
+          // let dx = Math.abs(obj.x + 40 - 250)
+          // let dy = Math.abs(obj.y + 40 - 250)
+          // let dis = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2))
+          // if(dis > 250) {
+          //   modelImgDataList.value[index].x = modelBeginCoords.x
+          //   modelImgDataList.value[index].y = modelBeginCoords.y
+          // }
           // 拖拽模型，如果都在圆盘中，并且这一步骤的所有模型已添加 >> 可进行下一步
           // 模型是否添加完成
           isAddFinish.value = true
@@ -219,7 +225,7 @@ export default {
             }
           })
           
-          isGoNext.value = isAddFinish.value && isAllAtStage.value
+          // isGoNext.value = isAddFinish.value && isAllAtStage.value
           // 如果是人际关系，则只需拖动一个模型就可以进行下一步
           if (gameStepNumber.value == 2) {
             isGoNext.value = true
@@ -243,7 +249,16 @@ export default {
       console.log(index,'----index')
       currentModelImgIndex.value = index
     }
-    
+    /**
+     * @description: 双击模型
+     * @param {*} index
+     * @return {void}
+     */
+    const draggableDblclick = (index) => {
+      console.log(index)
+      currentModelImgIndex.value = index
+      addModelModal.value.editModel(index)
+    }
     /**
      * @description: 添加模型
      * @param {*} obj 模型对象
@@ -259,8 +274,31 @@ export default {
           item.showAdd = false
         })
       }
+      // 定义一个数组，判断是否模型全部添加
+      const ArrFlag = []
+      // 如果有模型没添加，往数组中push一个true
+      addModelBoxList.value.forEach(item => {
+        item.forEach(item02 => {
+          if(item02.showAdd){
+            ArrFlag.push(true)
+          }
+        })
+      })
+      // 如果数组中没有元素，说明已经添加完成
+      if(ArrFlag?.length) {
+        showFinishBtn.value = false
+      } else {
+        showFinishBtn.value = true
+      }
     }
     
+    const editModelData = obj => {
+      console.log('222222222');
+      if(obj){
+        modelImgDataList.value[currentModelImgIndex.value] = obj
+      }
+    }
+
     /**
      * @description: 添加编辑模型
      * @param {*} index
@@ -289,7 +327,7 @@ export default {
      */
     const handelNextStep = () => {
       gameStepNumber.value++
-      isGoNext.value = false
+      // isGoNext.value = false
     }
 
     /**
@@ -308,7 +346,6 @@ export default {
     const setStateSize = () => {
       // let windowWidth = window.innerWidth
       // stageWidthScale.value = window.innerWidth / 1920
-
     }
     onMounted(() => {
       setStateSize()
@@ -332,7 +369,9 @@ export default {
       print,
       getImgUrl,
       draggableClick,
+      draggableDblclick,
       addModelData,
+      editModelData,
       goEditaddModelData,
       rotateRole,
       handelNextStep,
