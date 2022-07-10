@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-02 18:20:26
+ * @LastEditTime: 2022-07-10 16:11:08
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -42,7 +42,7 @@
       <!-- 模型 -->
       
       <!-- 顶部 -->
-      <div class="top-box">
+      <div class="top-box" :class="{hide: isHideTop}">
         <div class="top-btns-box">
           <van-button
             round
@@ -72,19 +72,15 @@
             下一步
           </van-button>
         </div>
-        <!-- 步骤线 -->
-        <!-- <van-steps :active="gameStepNumber">
-          <van-step></van-step>
-          <van-step></van-step>
-          <van-step></van-step>
-          <van-step></van-step>
-          <van-step></van-step>
-          <van-step></van-step>
-          <van-step></van-step>
-        </van-steps> -->
+        <div
+          @click="isHideTop=!isHideTop"
+          class="toggleTopMenuShow"
+        >
+          <van-icon name="arrow-down" />
+        </div>
       </div>
       <!--  底部操作按钮 -->
-      <div class="bottom-box">
+      <div class="bottom-box" :class="{hide: isHideTop}">
         <div class="left">
           <span @click="rotateRole(-15)" class="add">
             <img src="@/assets/game/add.png" alt="">
@@ -112,6 +108,12 @@
               alt=""
             >
           </div>
+        </div>
+        <div
+          @click="isHideTop=!isHideTop"
+          class="toggleTopMenuShow"
+        >
+          <van-icon name="arrow-up" />
         </div>
       </div>
     </div>
@@ -141,9 +143,10 @@ export default {
     const router = useRouter()
     const stageWidthScale = ref(1)
     const bkImgIndex = route.query.bkImgindex
+    const isHideTop = ref(true)
     // 添加模型弹框
     const addModelModal = ref(null)
-    const gameStepNumber = ref(0)
+    const gameStepNumber = ref(2)
     // 每一步的模型是否添加完成
     const isAddFinish = ref(false)
     // 是否全部拖入舞台
@@ -325,6 +328,7 @@ export default {
       isAddFinish,
       isGoNext,
       showFinishBtn,
+      isHideTop,
       print,
       getImgUrl,
       draggableClick,

@@ -11,13 +11,13 @@ $bk_blur: #031428;
     min-height: calc(100% - 85px);
     height: 622px;
     margin: 0 auto;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    overflow: hidden;
     .center-stage{
       width: 500px;
       height: 500px;
@@ -33,20 +33,38 @@ $bk_blur: #031428;
       right: 0;
       top: 0;
       z-index: 2;
-    }
-    .top-btns-box{
-      display: flex;
-      justify-content: space-between;
-      .line {
+      .top-btns-box {
+        display: flex;
+        justify-content: space-between;
+        .line {
+          display: inline-block;
+          width: 2px;
+          height: 44px;
+          background-color: #fff;
+        }
+        .van-button--normal{
+          font-size: 16px;
+          min-width: 102px;
+        }
+      }
+      .toggleTopMenuShow {
+        position: absolute;
         display: inline-block;
-        width: 2px;
-        height: 44px;
-        background-color: #fff;
+        width: 80px;
+        height: 30px;
+        background-color: #0A3468;
+        left: 50%;
+        bottom: -29px;
+        margin-left: -40px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .van-button--normal{
-        font-size: 16px;
-        min-width: 102px;
-      }
+    }
+    .top-box.hide {
+      top: -74px;
     }
     .bottom-box {
       width: 100%;
@@ -96,6 +114,24 @@ $bk_blur: #031428;
           }
         }
       }
+      .toggleTopMenuShow {
+        position: absolute;
+        display: inline-block;
+        width: 80px;
+        height: 30px;
+        background-color: #0A3468;
+        left: 50%;
+        top: -29px;
+        margin-left: -40px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .bottom-box.hide {
+      bottom: -100px;
     }
     .dragBoxItem {
       .name {
