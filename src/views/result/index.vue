@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-25 23:18:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-27 00:18:05
+ * @LastEditTime: 2022-07-16 18:35:06
  * @FilePath: \zb\src\views\result\index.vue
 -->
 <template>
@@ -114,5 +114,66 @@ $bk_blur: #031428;
       }
     }
   }
+}
+
+@media screen and (max-width: 1000px) {
+.result{
+  width: 100vw;
+  height: 100vh;
+  background-color: $bk_blur;
+  .topBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    img {
+      height: .4rem;
+    }
+    .title {
+      margin: 0 1rem;
+    }
+    .btn {
+      width: 100px;
+      height: 40px;
+      border-radius: 20px;
+    }
+    .cancelBtn {
+      background: linear-gradient(#006DF2, #0063DC);
+    }
+    .okBtn {
+      background: linear-gradient(#EFCB49, #DA7700);
+    }
+  }
+  .resultBox {
+    width: 8rem;
+    max-width: 80%;
+    height: unset;
+    background: #fff;
+    margin: 0 auto;
+    border: 4px solid #AEAEAE;
+    border-radius: 4px;
+    .top {
+      height: .2rem;
+      background-color: #000;
+      opacity: .6;
+    }
+    .content {
+      text-align: center;
+      .wordBox {
+        font-size: .3rem;
+        margin-top: .2rem;
+        .green {
+          color: #00D99E;
+        }
+      }
+      .imgBox {
+        margin-top: .2rem;
+        img {
+          height: 2.8rem;
+        }
+      }
+    }
+  }
+}
 }
 </style>

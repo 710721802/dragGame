@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 17:39:22
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-13 23:47:45
+ * @LastEditTime: 2022-07-16 13:46:48
  * @FilePath: \zb\src\components\TopUserInfo.vue
 -->
 <template>
@@ -38,4 +38,14 @@ export default {
     align-items: center;
     justify-content: space-between;
   }
+@media screen and (max-width: 1000px) {
+  .top-box{
+    padding: .2rem .4rem;
+    .logo {
+      img {
+        width: 1rem;
+      }
+    }
+  }
+}
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 16:47:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-27 00:23:06
+ * @LastEditTime: 2022-07-16 13:07:14
  * @FilePath: \zb\src\views\start\index.vue
 -->
 <template>
@@ -81,5 +81,21 @@ $bk_blur: #031428;
       border-radius: 6px;
     }
   }
+}
+@media screen and (max-width: 1000px) {
+.startPage{
+  .title-box{
+    font-size: .6rem;
+    margin: .3rem 0 .2rem 0;
+  }
+  .btn-box{
+    width: 4rem;
+    margin: 0 auto;
+    .btn {
+      margin-bottom: .1rem;
+      border-radius: 6px;
+    }
+  }
+}
 }
 </style>

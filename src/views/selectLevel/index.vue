@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 23:37:48
- * @LastEditors: 'wanghq18' 'wanghq18@lenovo.com'
- * @LastEditTime: 2022-06-21 17:34:02
+ * @LastEditors: whq 710721802@qq.com
+ * @LastEditTime: 2022-07-16 13:17:50
  * @FilePath: \zb\src\views\selectLevel\index.vue
 -->
 <template>
@@ -93,5 +93,39 @@ $bk_blur: #031428;
       cursor: pointer;
     }
   }
+}
+@media screen and (max-width: 1000px) {
+.selectLevel {
+  .contentBox {
+    display: flex;
+    justify-content: center;
+    .levelBox {
+      margin-top: .6rem;
+      display: flex;
+      flex-wrap: nowrap;
+      width: 100%;
+      padding: 0 .3rem;
+      justify-content: center;
+      align-items: center;
+      .levelItem {
+        width: 20%;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .beginBtnBox {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 0;
+    img {
+      cursor: pointer;
+      width: 5rem;
+    }
+  }
+}
 }
 </style>

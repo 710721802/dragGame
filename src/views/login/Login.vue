@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-11 17:42:59
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-12 16:49:18
+ * @LastEditTime: 2022-07-16 13:00:25
  * @FilePath: \zb\src\views\login\Login.vue
 -->
 <template>
@@ -84,6 +84,7 @@ $bk_blur: #031428;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     img {
       margin-left: 40px;
     }
@@ -146,5 +147,30 @@ $bk_blur: #031428;
   border-radius: 6px;
   color: #586378;
   padding: 0 10px;
+}
+@media screen and (max-width: 1000px) {
+.loginPage {
+  .contentBox {
+    img{
+      width: 40%;
+    }
+    .login-box {
+      width: 40%;
+      min-height: unset;
+      .login-box-title {
+        font-size: .24rem;
+        padding: 20px 30px 10px 30px;
+        margin-bottom: 10px;
+      }
+      .label-title {
+        font-size: .14rem;
+      }
+      .bottom-logo {
+        padding: 20px 0;
+      }
+    }
+  }
+}
+
 }
 </style>

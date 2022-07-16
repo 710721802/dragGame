@@ -2,7 +2,7 @@
  * @Author: 'wanghq18' 'wanghq18@lenovo.com'
  * @Date: 2022-06-21 17:20:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-25 17:07:22
+ * @LastEditTime: 2022-07-16 13:31:23
  * @FilePath: \zb\src\views\selectBackGround\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -146,5 +146,39 @@ $bk_blur: #031428;
 			width: 100%;
 		}
 	}
+}
+@media screen and (max-width: 1000px) {
+.selectBackGround {
+	.contentBox {
+		.title {
+			margin-bottom: .4rem;
+			img {
+				width: 3rem;
+			}
+		}
+		.swiperBox {
+			.controlBtn {
+				width: .4rem;
+			}
+			.my-swipe {
+				width: 5rem;
+				height: 3rem;
+		}
+		
+		}
+	}
+	.confirmBtnBox {
+		overflow: hidden;
+		.btnImg {
+			position: relative;
+			width: 3rem;
+			margin-bottom: -.6rem;
+		}
+		.bkImg {
+			width: 100%;
+			margin-bottom: -.6rem;
+		}
+	}
+}
 }
 </style>

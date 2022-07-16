@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-11 00:04:44
+ * @LastEditTime: 2022-07-16 18:04:21
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -214,6 +214,7 @@ $bk_blur: #031428;
   height: 100vh;
   background-color: $bk_blur;
   .game-box {
+    background-color: $bk_blur;
     position: relative;
     z-index: 1;
     border: 2px solid #fff;
@@ -232,6 +233,7 @@ $bk_blur: #031428;
       right: 24px;
       top: 32px;
       background: linear-gradient(#EFCB49, #DA7700);
+      z-index: 9;
     }
     .cjjs {
       padding: 33px 0 29px 25px;
@@ -311,5 +313,72 @@ $bk_blur: #031428;
       bottom: 80px;
     }
   }
+}
+@media screen and (max-width: 1000px) {
+.addModel {
+  height: calc(100vh - 42px);
+  .game-box {
+    width: unset;
+    height: calc(100vh - 42px);
+    .okBtn {
+      width: 2rem;
+      height: .7rem;
+      border-radius: .4rem;
+      right: .2rem;
+      top: .2rem;
+    }
+    .cjjs {
+      padding: .2rem 0 .2rem .2rem;
+      font-size: .3rem;
+    }
+    .nameAndAgeBox {
+      margin-left: .2rem;
+      input {
+        width: 2rem;
+        height: .6rem;
+        margin-right: .2rem;
+        border-radius: .1rem;
+      }
+    }
+    .chooseRoleStyle {
+      padding: .2rem;
+      .title {
+        font-size: .24rem;
+      }
+      .roleListBox {
+        width: 70%;
+        
+        .roleItem {
+          width: 7.5vw;
+          height: 6.4vw;
+          .imgBox {
+            height: 80%;
+            img {
+              height: 60%;
+            }
+          }
+          .name {
+            height: .4rem;
+            line-height: .4rem;
+          }
+        }
+      }
+    }
+    .chooseRoleColor {
+      padding: .2rem;
+      .title {
+        font-size: .24rem;
+      }
+    }
+    .showModelImg {
+      position: absolute;
+      right: 0;
+      bottom: 1rem;
+      img {
+        width: 3rem;
+      }
+    }
+  }
+}
 }
 </style>

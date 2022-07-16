@@ -24,10 +24,19 @@ $bk_blur: #031428;
       border-radius: 50%;
       background-color: #fff;
       opacity: .8;
+      margin-bottom: 3vw;
+      position: relative;
+      .center-stage-door {
+        position: absolute;
+        width: 20%;
+        height: 10%;
+        bottom: -7%;
+        left: 40%;
+      }
     }
     .top-box {
       background: linear-gradient(#031429, #0B3972);
-      padding: 15px 20px;
+      padding: 10px 10px;
       position: absolute;
       left: 0;
       right: 0;
@@ -65,7 +74,7 @@ $bk_blur: #031428;
       }
     }
     .top-box.hide {
-      top: -74px;
+      top: -64px;
     }
     .bottom-box {
       width: 100%;
@@ -150,4 +159,77 @@ $bk_blur: #031428;
 }
 .van-button--primary.current{
   background: #0a4580;
+}
+// 响应式css
+@media screen and (max-width: 1000px) {
+
+  .gameMainPage{
+    .game-box{
+      height: calc(100vh - 42px);
+      .center-stage{
+        transform: scale(.5);
+      }
+      .top-box {
+        .top-btns-box {
+          .line {
+            display: none;
+          }
+          .van-button--normal{
+            font-size: 12px;
+            height: .5rem;
+            min-width: 60px;
+          }
+        }
+        .toggleTopMenuShow {
+          width: 1.4rem;
+          height: .4rem;
+          bottom: -.4rem;
+          margin-left: -.7rem;
+        }
+      }
+      .top-box.hide {
+        top: -.9rem;
+      }
+      .bottom-box {
+        height: unset;
+        padding: .2rem 0;
+        .left {
+          .add {
+            img {
+              width: .3rem;
+            }
+          }
+          .center {
+            img {
+              width: .6rem;
+            }
+          }
+          .subtract {
+            img {
+              width: .3rem;
+            }
+          }
+        }
+        .right {
+          .item {
+            width: 1.4rem;
+            height: .9rem;
+            img {
+              width: .6rem;
+            }
+          }
+        }
+        .toggleTopMenuShow {
+          width: 1.4rem;
+          height: .4rem;
+          top: -.4rem;
+          margin-left: -.7rem;
+        }
+      }
+      .bottom-box.hide {
+        bottom: -70px;
+      }
+    }
+  }
+
 }

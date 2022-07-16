@@ -1,14 +1,15 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-11 00:03:24
+ * @LastEditTime: 2022-07-16 18:24:40
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
   <div class="gameMainPage">
     <TopUserinfo></TopUserinfo>
     <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
-      <div class="center-stage" :style="{transform: `scale(${stageWidthScale})`}">
+      <!-- <div class="center-stage" :style="{transform: `scale(${stageWidthScale})`}"> -->
+      <div class="center-stage">
         <Vue3DraggableResizable
           class="dragBoxItem"
           style="z-index: 3;"
@@ -36,10 +37,12 @@
           
         >
           <div class="name">
-            {{item.name}} - {{item.defaultName}}
+            {{item.name}}
+             <!-- - {{item.defaultName}} -->
           </div>
           <img style="width:60%;" :style="{transform: `rotate(${item.towards}deg)`}" :src="getImgUrl(item.imgUrl)" alt="">
         </Vue3DraggableResizable>
+        <img class="center-stage-door" src="@/assets/door.png" alt="">
       </div>
       <!-- 模型 -->
       
@@ -102,9 +105,9 @@
             v-for="(item, index) in addModelBoxList[gameStepNumber]"
             :key="index"
           >
-            <!-- <span class="name" v-show="item.showAdd">
+            <span class="name" v-show="item.showAdd">
               {{item.defaultName}}
-            </span> -->
+            </span>
             <img
               v-show="item.showAdd"
               @click="goEditaddModelData(index, item)"
@@ -147,7 +150,7 @@ export default {
     const router = useRouter()
     const stageWidthScale = ref(1)
     const bkImgIndex = route.query.bkImgindex
-    const isHideTop = ref(true)
+    const isHideTop = ref(false)
     // 添加模型弹框
     const addModelModal = ref(null)
     const gameStepNumber = ref(0)
@@ -245,10 +248,22 @@ export default {
      * @param {*} index 
      * @return {void}
      */
+    let touchTime = ref(0)
     const draggableClick = index => {
-      console.log(index,'----index')
-      currentModelImgIndex.value = index
+      
+      touchTime.value++
+      if(touchTime.value == 2) {
+        touchTime.value = 0
+        addModelModal.value.editModel(index)
+      }
+      setTimeout(function () {
+        if (touchTime.value == 1) {
+            touchTime.value = 0 
+            currentModelImgIndex.value = index
+        }
+      }, 250)
     }
+    
     /**
      * @description: 双击模型
      * @param {*} index
@@ -366,6 +381,7 @@ export default {
       isGoNext,
       showFinishBtn,
       isHideTop,
+      touchTime,
       print,
       getImgUrl,
       draggableClick,
