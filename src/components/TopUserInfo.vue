@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 17:39:22
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 13:46:48
+ * @LastEditTime: 2022-07-17 18:39:15
  * @FilePath: \zb\src\components\TopUserInfo.vue
 -->
 <template>
@@ -15,11 +15,16 @@
       </span>
     </div>
   </div>
+  <OrientLayer></OrientLayer>
 </template>
 
 <script>
 import { ref } from '@vue/reactivity'
+import OrientLayer from '@/components/OrientLayer.vue'
 export default {
+  components: {
+    OrientLayer,
+  },
   setup () {
     // 用户名
     const userName = ref(localStorage.getItem('userName'))
