@@ -2,7 +2,7 @@
  * @Author: 'wanghq18' 'wanghq18@lenovo.com'
  * @Date: 2022-06-21 17:20:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 13:31:23
+ * @LastEditTime: 2022-07-17 19:27:54
  * @FilePath: \zb\src\views\selectBackGround\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,7 +13,6 @@
 			<div class="title">
 				<img src="@/assets/gameSection/choseYourWorld.png" alt="">
 			</div>
-			{{bkImgIndex}}
 			<div class="swiperBox">
 				<img @click="goPrevNext('prev')" class="controlBtn left" src="@/assets/gameSection/icon-left.png" alt="">
 				<van-swipe
@@ -114,8 +113,8 @@ $bk_blur: #031428;
 				height: 110px;
 			}
 			.my-swipe {
-				width: 630px;
-				height: 374px;
+				width: 500px;
+				height: 280px;
 				margin: 0 32px;
 				border-radius: 10px;
 				overflow: hidden;

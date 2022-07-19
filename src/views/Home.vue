@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-01 14:04:39
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 12:41:19
+ * @LastEditTime: 2022-07-17 19:19:08
  * @FilePath: \zb\src\views\Home.vue
 -->
 <template>
@@ -68,7 +68,7 @@ $bk_blur: #031428;
     }
   }
   .indexLogo {
-    width: 500px;
+    width: 400px;
   }
 }
 @media screen and (max-width: 1000px) {

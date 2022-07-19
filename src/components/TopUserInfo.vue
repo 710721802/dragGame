@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 17:39:22
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-17 18:39:15
+ * @LastEditTime: 2022-07-17 19:23:26
  * @FilePath: \zb\src\components\TopUserInfo.vue
 -->
 <template>
@@ -42,15 +42,23 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-@media screen and (max-width: 1000px) {
-  .top-box{
-    padding: .2rem .4rem;
     .logo {
       img {
-        width: 1rem;
+        width: 100px;
       }
     }
+    .user {
+      font-size: 20px;
+    }
   }
+@media screen and (max-width: 1000px) {
+  // .top-box{
+  //   padding: .2rem .4rem;
+  //   .logo {
+  //     img {
+  //       width: 1rem;
+  //     }
+  //   }
+  // }
 }
 </style>

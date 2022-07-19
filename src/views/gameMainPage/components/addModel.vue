@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 18:04:21
+ * @LastEditTime: 2022-07-17 20:00:37
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -140,9 +140,9 @@ export default {
           name: modelDataInfo.name,
           imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
           initW: 80,
-          initH: 80,
-          x: 210,
-          y: 210,
+          initH: 70,
+          x: 0,
+          y: 0,
           w: 80,
           h: 80,
           towards: 0,
