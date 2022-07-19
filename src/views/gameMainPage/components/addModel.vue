@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-17 20:00:37
+ * @LastEditTime: 2022-07-19 23:57:50
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -200,6 +200,7 @@ $bk_blur: #031428;
 }
 @mixin currentChoseBlock {
   content: '√';
+  font-size: 14px;
   display: inline-block;
   text-align: center;
   width: 20px;
@@ -219,10 +220,8 @@ $bk_blur: #031428;
     z-index: 1;
     border: 2px solid #fff;
     box-sizing: border-box;
-    // width: calc(100% - 52px);
-    // min-height: calc(100% - 145px);
+    height: calc(100vh - 70px);
     width: 966px;
-    height: 622px;
     margin: 0 auto;
     text-align: left;
     .okBtn {
@@ -236,14 +235,15 @@ $bk_blur: #031428;
       z-index: 9;
     }
     .cjjs {
-      padding: 33px 0 29px 25px;
-      font-size: 36px;
+      padding: 10px 20px 20px 20px;
+      font-size: 28px;
       font-style: italic;
       font-weight: bold;
       line-height: 1em;
     }
     .nameAndAgeBox {
-      margin-left: 25px;
+      margin-left: 20px;
+      font-size: 16px;
       input {
         color: #333;
         width: 140px;
@@ -254,7 +254,7 @@ $bk_blur: #031428;
       }
     }
     .chooseRoleStyle {
-      padding: 30px 0 16px 25px;
+      padding: 20px;
       .title {
         @include linearBkTitle;
       }
@@ -263,8 +263,7 @@ $bk_blur: #031428;
         flex-wrap: wrap;
         width: 500px;
         .roleItem {
-          width: 92px;
-          height: 92px;
+          width: 62px;
           background-color: #fff;
           margin: 0 8px 10px 0;
           position: relative;
@@ -272,12 +271,12 @@ $bk_blur: #031428;
             @include currentChoseBlock;
           }
           .imgBox {
-            height: 75px;
+            height: 62px;
             display: flex;
             justify-content: center;
             align-items: center;
             img {
-              height: 80%;
+              height: 70%;
             }
           }
           .name {
@@ -311,74 +310,11 @@ $bk_blur: #031428;
       position: absolute;
       right: 64px;
       bottom: 80px;
-    }
-  }
-}
-@media screen and (max-width: 1000px) {
-.addModel {
-  height: calc(100vh - 42px);
-  .game-box {
-    width: unset;
-    height: calc(100vh - 42px);
-    .okBtn {
-      width: 2rem;
-      height: .7rem;
-      border-radius: .4rem;
-      right: .2rem;
-      top: .2rem;
-    }
-    .cjjs {
-      padding: .2rem 0 .2rem .2rem;
-      font-size: .3rem;
-    }
-    .nameAndAgeBox {
-      margin-left: .2rem;
-      input {
-        width: 2rem;
-        height: .6rem;
-        margin-right: .2rem;
-        border-radius: .1rem;
-      }
-    }
-    .chooseRoleStyle {
-      padding: .2rem;
-      .title {
-        font-size: .24rem;
-      }
-      .roleListBox {
-        width: 70%;
-        
-        .roleItem {
-          width: 7.5vw;
-          height: 6.4vw;
-          .imgBox {
-            height: 80%;
-            img {
-              height: 60%;
-            }
-          }
-          .name {
-            height: .4rem;
-            line-height: .4rem;
-          }
-        }
-      }
-    }
-    .chooseRoleColor {
-      padding: .2rem;
-      .title {
-        font-size: .24rem;
-      }
-    }
-    .showModelImg {
-      position: absolute;
-      right: 0;
-      bottom: 1rem;
       img {
-        width: 3rem;
+        width: 200px;
+        max-height: 300px;
       }
     }
   }
-}
 }
 </style>

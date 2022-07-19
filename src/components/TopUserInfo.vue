@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 17:39:22
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-17 19:23:26
+ * @LastEditTime: 2022-07-19 22:14:14
  * @FilePath: \zb\src\components\TopUserInfo.vue
 -->
 <template>
@@ -38,10 +38,12 @@ export default {
 
 <style lang="scss" scoped>
   .top-box{
-    padding: 20px;
+    padding: 10px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 30px;
+    overflow: hidden;
     .logo {
       img {
         width: 100px;

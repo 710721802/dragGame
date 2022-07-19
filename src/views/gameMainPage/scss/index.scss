@@ -8,8 +8,7 @@ $bk_blur: #031428;
     position: relative;
     z-index: 1;
     box-sizing: border-box;
-    // min-height: calc(100% - 85rem);
-    height: 622px;
+    height: calc(100vh - 50px);
     margin: 0 auto;
     background-size: cover;
     background-position: center;
@@ -26,6 +25,7 @@ $bk_blur: #031428;
       opacity: .8;
       margin-bottom: 3vw;
       position: relative;
+      top: -10px;
       .center-stage-door {
         position: absolute;
         width: 20%;
@@ -91,12 +91,21 @@ $bk_blur: #031428;
         
         .add {
           margin: 0 20px 0 20px;
+          img {
+            width: 30px;
+          }
         }
         .center {
           margin-right: 20px;
+          img {
+            width: 60px;
+          }
         }
         .subtract {
           margin-right: 20px;
+          img {
+            width: 30px;
+          }
         }
       }
       .right {
@@ -122,6 +131,9 @@ $bk_blur: #031428;
             bottom: 5px;
             left: 0;
             right: 0;
+          }
+          img {
+            width: 100px;
           }
         }
       }
@@ -159,77 +171,4 @@ $bk_blur: #031428;
 }
 .van-button--primary.current{
   background: #0a4580;
-}
-// 响应式css
-@media screen and (max-width: 1000px) {
-
-  .gameMainPage{
-    .game-box{
-      height: calc(100vh - 42px);
-      .center-stage{
-        transform: scale(.5);
-      }
-      .top-box {
-        .top-btns-box {
-          .line {
-            display: none;
-          }
-          .van-button--normal{
-            font-size: 12px;
-            height: .5rem;
-            min-width: 60px;
-          }
-        }
-        .toggleTopMenuShow {
-          width: 1.4rem;
-          height: .4rem;
-          bottom: -.4rem;
-          margin-left: -.7rem;
-        }
-      }
-      .top-box.hide {
-        top: -.9rem;
-      }
-      .bottom-box {
-        height: unset;
-        padding: .2rem 0;
-        .left {
-          .add {
-            img {
-              width: .3rem;
-            }
-          }
-          .center {
-            img {
-              width: .6rem;
-            }
-          }
-          .subtract {
-            img {
-              width: .3rem;
-            }
-          }
-        }
-        .right {
-          .item {
-            width: 1.4rem;
-            height: .9rem;
-            img {
-              width: .6rem;
-            }
-          }
-        }
-        .toggleTopMenuShow {
-          width: 1.4rem;
-          height: .4rem;
-          top: -.4rem;
-          margin-left: -.7rem;
-        }
-      }
-      .bottom-box.hide {
-        bottom: -70px;
-      }
-    }
-  }
-
 }

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-01 14:04:39
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-17 19:19:08
+ * @LastEditTime: 2022-07-19 21:04:15
  * @FilePath: \zb\src\views\Home.vue
 -->
 <template>
@@ -58,7 +58,7 @@ $bk_blur: #031428;
     margin-bottom: 16px;
   }
   .bottom-box {
-    margin-top: 57px;
+    margin-top: 40px;
     .btn {
       width: 257px;
       height: 60px;
@@ -70,20 +70,5 @@ $bk_blur: #031428;
   .indexLogo {
     width: 400px;
   }
-}
-@media screen and (max-width: 1000px) {
-.homePage {
-  .top-title {
-    transform: scale(.6);
-  }
-  .bottom-box {
-    .btn {
-      transform: scale(.6);
-    }
-  }
-  .indexLogo {
-    width: 200px;
-  }
-}
 }
 </style>
