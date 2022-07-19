@@ -2,7 +2,7 @@
  * @Author: 'wanghq18' 'wanghq18@lenovo.com'
  * @Date: 2022-06-21 17:20:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-25 17:07:22
+ * @LastEditTime: 2022-07-19 22:02:53
  * @FilePath: \zb\src\views\selectBackGround\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,7 +13,6 @@
 			<div class="title">
 				<img src="@/assets/gameSection/choseYourWorld.png" alt="">
 			</div>
-			{{bkImgIndex}}
 			<div class="swiperBox">
 				<img @click="goPrevNext('prev')" class="controlBtn left" src="@/assets/gameSection/icon-left.png" alt="">
 				<van-swipe
@@ -42,6 +41,7 @@ import { useRouter } from 'vue-router'
 import TopUserinfo from '@/components/TopUserInfo.vue'
 import { ref } from '@vue/reactivity'
 import { IMG_DATA } from '@/views/gameMainPage/data.js'
+import { onMounted } from '@vue/runtime-core'
 export default {
   components: {
     TopUserinfo,
@@ -81,6 +81,13 @@ export default {
 			bkImgIndex.value = index
 		}
 
+		onMounted(() => {
+			window.addEventListener('resize', () => {
+				// 窗口变化重新渲染轮播图
+				mySwipe.value.resize()
+			})
+		})
+
 		return {
 			imgData,
 			goTo,
@@ -104,6 +111,9 @@ $bk_blur: #031428;
 	.contentBox {
 		.title {
 			margin-bottom: 47px;
+			img {
+				width: 300px;
+			}
 		}
 		.swiperBox {
 			display: flex;
@@ -114,8 +124,8 @@ $bk_blur: #031428;
 				height: 110px;
 			}
 			.my-swipe {
-				width: 630px;
-				height: 374px;
+				width: 500px;
+				height: 280px;
 				margin: 0 32px;
 				border-radius: 10px;
 				overflow: hidden;
@@ -141,9 +151,11 @@ $bk_blur: #031428;
 		.btnImg {
 			position: relative;
 			margin-bottom: -50px;
+			width: 200px;
 		}
 		.bkImg {
 			width: 100%;
+			height: 60px;
 		}
 	}
 }

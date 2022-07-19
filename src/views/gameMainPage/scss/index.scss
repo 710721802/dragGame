@@ -8,45 +8,73 @@ $bk_blur: #031428;
     position: relative;
     z-index: 1;
     box-sizing: border-box;
-    min-height: calc(100% - 85px);
-    height: 622px;
+    height: calc(100vh - 50px);
     margin: 0 auto;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    overflow: hidden;
     .center-stage{
-      width: 500px;
-      height: 500px;
+      width: 300px;
+      height: 300px;
       border-radius: 50%;
       background-color: #fff;
       opacity: .8;
+      margin-bottom: 3vw;
+      position: relative;
+      top: -10px;
+      .center-stage-door {
+        position: absolute;
+        width: 20%;
+        height: 10%;
+        bottom: -7%;
+        left: 40%;
+      }
     }
     .top-box {
       background: linear-gradient(#031429, #0B3972);
-      padding: 15px 20px;
+      padding: 10px 10px;
       position: absolute;
       left: 0;
       right: 0;
       top: 0;
       z-index: 2;
-    }
-    .top-btns-box{
-      display: flex;
-      justify-content: space-between;
-      .line {
+      transition: all .5s;
+      .top-btns-box {
+        display: flex;
+        justify-content: space-between;
+        .line {
+          display: inline-block;
+          width: 2px;
+          height: 44px;
+          background-color: #fff;
+        }
+        .van-button--normal{
+          font-size: 16px;
+          min-width: 102px;
+        }
+      }
+      .toggleTopMenuShow {
+        position: absolute;
         display: inline-block;
-        width: 2px;
-        height: 44px;
-        background-color: #fff;
+        width: 80px;
+        height: 30px;
+        background-color: #0A3468;
+        left: 50%;
+        bottom: -29px;
+        margin-left: -40px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .van-button--normal{
-        font-size: 16px;
-        min-width: 102px;
-      }
+    }
+    .top-box.hide {
+      top: -64px;
     }
     .bottom-box {
       width: 100%;
@@ -56,18 +84,28 @@ $bk_blur: #031428;
       bottom: 0;
       display: flex;
       justify-content: space-between;
+      transition: all .5s;
       .left {
         display: flex;
         align-items: center;
         
         .add {
           margin: 0 20px 0 20px;
+          img {
+            width: 30px;
+          }
         }
         .center {
           margin-right: 20px;
+          img {
+            width: 60px;
+          }
         }
         .subtract {
           margin-right: 20px;
+          img {
+            width: 30px;
+          }
         }
       }
       .right {
@@ -94,8 +132,29 @@ $bk_blur: #031428;
             left: 0;
             right: 0;
           }
+          img {
+            width: 100px;
+          }
         }
       }
+      .toggleTopMenuShow {
+        position: absolute;
+        display: inline-block;
+        width: 80px;
+        height: 30px;
+        background-color: #0A3468;
+        left: 50%;
+        top: -29px;
+        margin-left: -40px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .bottom-box.hide {
+      bottom: -100px;
     }
     .dragBoxItem {
       .name {
@@ -109,4 +168,7 @@ $bk_blur: #031428;
     }
   }
   
+}
+.van-button--primary.current{
+  background: #0a4580;
 }

@@ -1,25 +1,29 @@
 /*
  * @Date: 2022-06-18 22:07:58
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-26 00:53:16
+ * @LastEditTime: 2022-07-10 19:47:23
  * @FilePath: \zb\src\views\gameMainPage\data.js
  */
 let STEP = [
   {
     value: '角色',
-    key: 0
+    key: 0,
+    isFinished: false
   },
   {
     value: '情绪',
-    key: 1
+    key: 1,
+    isFinished: false
   },
   {
     value: '人际关系',
-    key: 2
+    key: 2,
+    isFinished: false
   },
   {
     value: '心境属性',
-    key: 3
+    key: 3,
+    isFinished: false
   },
   {
     value: '生理',
@@ -27,7 +31,8 @@ let STEP = [
   },
   {
     value: '环境',
-    key: 5
+    key: 5,
+    isFinished: false
   },
 ]
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-25 23:18:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-27 00:18:05
+ * @LastEditTime: 2022-07-19 21:33:17
  * @FilePath: \zb\src\views\result\index.vue
 -->
 <template>
@@ -72,7 +72,7 @@ $bk_blur: #031428;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px 0;
+    margin: 0 0 30px 0;
     .title {
       margin: 0 180px;
     }
@@ -89,8 +89,8 @@ $bk_blur: #031428;
     }
   }
   .resultBox {
-    width: 956px;
-    height: 500px;
+    width: 800px;
+    height: 380px;
     background: #fff;
     margin: 0 auto;
     border: 4px solid #AEAEAE;
@@ -110,7 +110,10 @@ $bk_blur: #031428;
         }
       }
       .imgBox {
-        margin-top: 74px;
+        margin-top: 20px;
+        img {
+          width: 200px;
+        }
       }
     }
   }

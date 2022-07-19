@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-02 19:35:08
+ * @LastEditTime: 2022-07-19 23:57:50
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -89,6 +89,8 @@ export default {
   },
   setup (props, context) {
     const show = ref(false)
+    // 是否是编辑
+    const isEdit = ref(false)
     // 选中的颜色index
     const currentColorIndex = ref(0)
     // 选中的角色样式index
@@ -107,13 +109,24 @@ export default {
      * @return {*}
      */
     const showModal = (index, info) => {
-      console.log(info);
       modelDataInfo.defaultName = info.defaultName
       modelDataInfo.name = info.defaultName
       clickBoxIndex.value = index
       show.value = true
     }
     
+    /**
+     * @description: 编辑模型
+     * @param {*} index
+     * @param {*} info
+     * @return {*}
+     */
+    const editModel = (index) => {
+      isEdit.value = true
+      console.log(index)
+      show.value = true
+    }
+
     /**
      * @description: 关闭按钮
      * @return {*}
@@ -127,9 +140,9 @@ export default {
           name: modelDataInfo.name,
           imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
           initW: 80,
-          initH: 80,
-          x: 210,
-          y: 210,
+          initH: 70,
+          x: 0,
+          y: 0,
           w: 80,
           h: 80,
           towards: 0,
@@ -137,7 +150,12 @@ export default {
           draggable: true,
           resizable: false,
         }
-        context.emit('addModelData',obj)
+        if (!isEdit.value) {
+          context.emit('addModelData',obj)
+        } else {
+          isEdit.value = false
+          context.emit('editModelData',obj)
+        }
         show.value = false
       }
     }
@@ -156,12 +174,14 @@ export default {
 
     return {
       show,
+      isEdit,
       ROLE_COLOR,
       ROLE_STYLE,
       currentColorIndex,
       currenStyleIndex,
       modelDataInfo,
       showModal,
+      editModel,
       hideModal,
       getImgUrl,
     }
@@ -180,6 +200,7 @@ $bk_blur: #031428;
 }
 @mixin currentChoseBlock {
   content: '√';
+  font-size: 14px;
   display: inline-block;
   text-align: center;
   width: 20px;
@@ -194,14 +215,13 @@ $bk_blur: #031428;
   height: 100vh;
   background-color: $bk_blur;
   .game-box {
+    background-color: $bk_blur;
     position: relative;
     z-index: 1;
     border: 2px solid #fff;
     box-sizing: border-box;
-    // width: calc(100% - 52px);
-    // min-height: calc(100% - 145px);
+    height: calc(100vh - 70px);
     width: 966px;
-    height: 622px;
     margin: 0 auto;
     text-align: left;
     .okBtn {
@@ -212,16 +232,18 @@ $bk_blur: #031428;
       right: 24px;
       top: 32px;
       background: linear-gradient(#EFCB49, #DA7700);
+      z-index: 9;
     }
     .cjjs {
-      padding: 33px 0 29px 25px;
-      font-size: 36px;
+      padding: 10px 20px 20px 20px;
+      font-size: 28px;
       font-style: italic;
       font-weight: bold;
       line-height: 1em;
     }
     .nameAndAgeBox {
-      margin-left: 25px;
+      margin-left: 20px;
+      font-size: 16px;
       input {
         color: #333;
         width: 140px;
@@ -232,7 +254,7 @@ $bk_blur: #031428;
       }
     }
     .chooseRoleStyle {
-      padding: 30px 0 16px 25px;
+      padding: 20px;
       .title {
         @include linearBkTitle;
       }
@@ -241,8 +263,7 @@ $bk_blur: #031428;
         flex-wrap: wrap;
         width: 500px;
         .roleItem {
-          width: 92px;
-          height: 92px;
+          width: 62px;
           background-color: #fff;
           margin: 0 8px 10px 0;
           position: relative;
@@ -250,12 +271,12 @@ $bk_blur: #031428;
             @include currentChoseBlock;
           }
           .imgBox {
-            height: 75px;
+            height: 62px;
             display: flex;
             justify-content: center;
             align-items: center;
             img {
-              height: 80%;
+              height: 70%;
             }
           }
           .name {
@@ -289,6 +310,10 @@ $bk_blur: #031428;
       position: absolute;
       right: 64px;
       bottom: 80px;
+      img {
+        width: 200px;
+        max-height: 300px;
+      }
     }
   }
 }

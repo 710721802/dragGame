@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-01 14:04:39
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-06-11 20:44:21
+ * @LastEditTime: 2022-07-19 21:04:15
  * @FilePath: \zb\src\views\Home.vue
 -->
 <template>
@@ -10,7 +10,7 @@
       <div class="top-title">
         Hi！欢迎来到小宇宙~
       </div>
-      <img alt="Vue logo" src="@/assets/index_icon.png">
+      <img class="indexLogo" alt="Vue logo" src="@/assets/index_icon.png">
       <div class="bottom-box">
         <button class="btn" @click="goTo('login')">
           立即进入
@@ -58,7 +58,7 @@ $bk_blur: #031428;
     margin-bottom: 16px;
   }
   .bottom-box {
-    margin-top: 57px;
+    margin-top: 40px;
     .btn {
       width: 257px;
       height: 60px;
@@ -66,6 +66,9 @@ $bk_blur: #031428;
       font-size: 24px;
       font-weight: bold;
     }
+  }
+  .indexLogo {
+    width: 400px;
   }
 }
 </style>
