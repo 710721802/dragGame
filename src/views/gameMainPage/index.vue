@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-08-08 00:46:58
+ * @LastEditTime: 2022-08-08 01:28:25
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -55,7 +55,7 @@
             v-for="(item, index) in stepInfo"
             :key="item.key"
             :disabled="item.isFinished"
-            @click="gameStepNumber = index"
+            @click="clickStep(index)"
             :class="{current: index === gameStepNumber}"
           >
             {{item.value}}
@@ -131,6 +131,11 @@
     @editModelData="editModelData"
     :modelData="modelImgDataList"
   ></addModel>
+  <van-dialog v-model:show="showInfoModal">
+    <div class="tipsContentBox">
+      {{tipsContent}}
+    </div>
+  </van-dialog>
 </template>
 
 <script>
@@ -151,6 +156,8 @@ export default {
     const stageWidthScale = ref(1)
     const bkImgIndex = route.query.bkImgindex
     const isHideTop = ref(false)
+    const showInfoModal = ref(false)
+    const tipsContent = ref('')
     // 舞台弹框
     const centerStage = ref()
     // 添加模型弹框
@@ -360,6 +367,20 @@ export default {
       })
     }
 
+    const clickStep = index => {
+      gameStepNumber.value = index
+      if (gameStepNumber.value === 2) {
+        showInfoModal.value = true
+        tipsContent.value = '请邀请至少一位你生活中很重要的人来到这个舞台'
+      } else if (gameStepNumber.value === 4) {
+        showInfoModal.value = true
+        tipsContent.value = '请邀请生理角色进入舞台,TA可以是某个让你在意的身体部位或生理感受'
+      } else if (gameStepNumber.value === 5) {
+        tipsContent.value = '请邀请环境角色进入舞台,TA是近期让你印象深刻或对你造成一定影响的地方'
+        showInfoModal.value = true
+      }
+    }
+
     const setStateSize = () => {
       history.go(0)
     }
@@ -387,6 +408,8 @@ export default {
       showFinishBtn,
       isHideTop,
       touchTime,
+      showInfoModal,
+      tipsContent,
       print,
       getImgUrl,
       draggableClick,
@@ -397,6 +420,7 @@ export default {
       rotateRole,
       handelNextStep,
       handelFinish,
+      clickStep,
     }
   }
 }
