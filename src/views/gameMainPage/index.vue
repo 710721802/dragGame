@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 18:24:40
+ * @LastEditTime: 2022-08-08 00:46:58
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -9,7 +9,7 @@
     <TopUserinfo></TopUserinfo>
     <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
       <!-- <div class="center-stage" :style="{transform: `scale(${stageWidthScale})`}"> -->
-      <div class="center-stage">
+      <div class="center-stage" ref="centerStage">
         <Vue3DraggableResizable
           class="dragBoxItem"
           style="z-index: 3;"
@@ -151,6 +151,8 @@ export default {
     const stageWidthScale = ref(1)
     const bkImgIndex = route.query.bkImgindex
     const isHideTop = ref(false)
+    // 舞台弹框
+    const centerStage = ref()
     // 添加模型弹框
     const addModelModal = ref(null)
     const gameStepNumber = ref(0)
@@ -359,14 +361,17 @@ export default {
     }
 
     const setStateSize = () => {
-      // let windowWidth = window.innerWidth
-      // stageWidthScale.value = window.innerWidth / 1920
+      history.go(0)
     }
     onMounted(() => {
-      setStateSize()
+      localStorage.setItem('stageWidth', centerStage.value.clientWidth)
+      localStorage.setItem('stageHeight', centerStage.value.clientHeight)
+      localStorage.setItem('stageCoordX', centerStage.value.offsetLeft + centerStage.value.clientWidth / 2)
+      localStorage.setItem('stageCoordY', centerStage.value.offsetTop + centerStage.value.clientHeight / 2)
       window.onresize = setStateSize
     })
     return {
+      centerStage,
       stageWidthScale,
       bkImgIndex,
       gameStepNumber,
