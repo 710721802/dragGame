@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 18:24:40
+ * @LastEditTime: 2022-08-10 00:17:54
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -9,7 +9,7 @@
     <TopUserinfo></TopUserinfo>
     <div class="game-box" :style="{backgroundImage: 'url(' + imgData[bkImgIndex].url + ')'}">
       <!-- <div class="center-stage" :style="{transform: `scale(${stageWidthScale})`}"> -->
-      <div class="center-stage">
+      <div class="center-stage" ref="centerStage">
         <Vue3DraggableResizable
           class="dragBoxItem"
           style="z-index: 3;"
@@ -55,7 +55,7 @@
             v-for="(item, index) in stepInfo"
             :key="item.key"
             :disabled="item.isFinished"
-            @click="gameStepNumber = index"
+            @click="clickStep(index)"
             :class="{current: index === gameStepNumber}"
           >
             {{item.value}}
@@ -104,16 +104,18 @@
             class="item"
             v-for="(item, index) in addModelBoxList[gameStepNumber]"
             :key="index"
-          >
-            <span class="name" v-show="item.showAdd">
-              {{item.defaultName}}
-            </span>
-            <img
-              v-show="item.showAdd"
-              @click="goEditaddModelData(index, item)"
-              src="@/assets/game/imgBk.png"
-              alt=""
-            >
+          > 
+            <div class="con">
+              <img
+                v-show="item.showAdd"
+                @click="goEditaddModelData(index, item)"
+                src="@/assets/game/imgBk.png"
+                alt=""
+              ><br>
+              <span class="name">
+                {{item.defaultName}}
+              </span>
+            </div>
           </div>
         </div>
         <div
@@ -131,6 +133,11 @@
     @editModelData="editModelData"
     :modelData="modelImgDataList"
   ></addModel>
+  <van-dialog v-model:show="showInfoModal">
+    <div class="tipsContentBox">
+      {{tipsContent}}
+    </div>
+  </van-dialog>
 </template>
 
 <script>
@@ -151,6 +158,10 @@ export default {
     const stageWidthScale = ref(1)
     const bkImgIndex = route.query.bkImgindex
     const isHideTop = ref(false)
+    const showInfoModal = ref(false)
+    const tipsContent = ref('')
+    // 舞台弹框
+    const centerStage = ref()
     // 添加模型弹框
     const addModelModal = ref(null)
     const gameStepNumber = ref(0)
@@ -358,15 +369,32 @@ export default {
       })
     }
 
+    const clickStep = index => {
+      gameStepNumber.value = index
+      if (gameStepNumber.value === 2) {
+        showInfoModal.value = true
+        tipsContent.value = '请邀请至少一位你生活中很重要的人来到这个舞台'
+      } else if (gameStepNumber.value === 4) {
+        showInfoModal.value = true
+        tipsContent.value = '请邀请生理角色进入舞台,TA可以是某个让你在意的身体部位或生理感受'
+      } else if (gameStepNumber.value === 5) {
+        tipsContent.value = '请邀请环境角色进入舞台,TA是近期让你印象深刻或对你造成一定影响的地方'
+        showInfoModal.value = true
+      }
+    }
+
     const setStateSize = () => {
-      // let windowWidth = window.innerWidth
-      // stageWidthScale.value = window.innerWidth / 1920
+      history.go(0)
     }
     onMounted(() => {
-      setStateSize()
+      localStorage.setItem('stageWidth', centerStage.value.clientWidth)
+      localStorage.setItem('stageHeight', centerStage.value.clientHeight)
+      localStorage.setItem('stageCoordX', centerStage.value.offsetLeft + centerStage.value.clientWidth / 2)
+      localStorage.setItem('stageCoordY', centerStage.value.offsetTop + centerStage.value.clientHeight / 2)
       window.onresize = setStateSize
     })
     return {
+      centerStage,
       stageWidthScale,
       bkImgIndex,
       gameStepNumber,
@@ -382,6 +410,8 @@ export default {
       showFinishBtn,
       isHideTop,
       touchTime,
+      showInfoModal,
+      tipsContent,
       print,
       getImgUrl,
       draggableClick,
@@ -392,6 +422,7 @@ export default {
       rotateRole,
       handelNextStep,
       handelFinish,
+      clickStep,
     }
   }
 }

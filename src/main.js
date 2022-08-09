@@ -1,14 +1,14 @@
 /*
  * @Date: 2022-06-11 20:37:00
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-17 18:56:50
+ * @LastEditTime: 2022-08-08 00:52:14
  * @FilePath: \zb\src\main.js
  */
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Button, Form, Field, CellGroup, Step, Steps, Overlay, Swipe, SwipeItem, Icon } from 'vant';
+import { Button, Form, Field, CellGroup, Step, Steps, Overlay, Swipe, SwipeItem, Icon, Dialog } from 'vant';
 import Vue3DraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 import 'vant/lib/index.css';
@@ -28,4 +28,5 @@ createApp(App).use(store).use(router)
 .use(Swipe)
 .use(SwipeItem)
 .use(Icon)
+.use(Dialog)
 .mount('#app')

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-19 23:57:50
+ * @LastEditTime: 2022-08-10 00:40:17
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -25,12 +25,12 @@
             type="text"
             v-model="modelDataInfo.name"
           >
-          <label for="age">角色年龄 </label>
+          <!-- <label for="age">角色年龄 </label>
           <input
             type="number"
             value="10"
             name="age"
-          >
+          > -->
         </div>
         <!-- 选择角色样式 -->
         <div class="chooseRoleStyle">
@@ -139,12 +139,12 @@ export default {
           defaultName: modelDataInfo.defaultName,
           name: modelDataInfo.name,
           imgUrl: `images/model/${ROLE_COLOR[currentColorIndex.value].colorName}/俯视/${ROLE_STYLE[currenStyleIndex.value].value}`,
-          initW: 80,
-          initH: 70,
-          x: 0,
-          y: 0,
-          w: 80,
-          h: 80,
+          initW: 50,
+          initH: 50,
+          x: localStorage.getItem('stageWidth') / 2 - 25,
+          y: localStorage.getItem('stageHeight') / 2 - 25,
+          w: 50,
+          h: 50,
           towards: 0,
           active: true,
           draggable: true,
