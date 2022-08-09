@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-16 22:11:33
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-08-08 00:39:16
+ * @LastEditTime: 2022-08-10 00:40:17
  * @FilePath: \zb\src\views\gameMainPage\components\addModel.vue
 -->
 <template>
@@ -143,8 +143,8 @@ export default {
           initH: 50,
           x: localStorage.getItem('stageWidth') / 2 - 25,
           y: localStorage.getItem('stageHeight') / 2 - 25,
-          w: 80,
-          h: 80,
+          w: 50,
+          h: 50,
           towards: 0,
           active: true,
           draggable: true,

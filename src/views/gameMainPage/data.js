@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-18 22:07:58
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-10 19:47:23
+ * @LastEditTime: 2022-08-10 00:42:10
  * @FilePath: \zb\src\views\gameMainPage\data.js
  */
 let STEP = [
@@ -66,10 +66,10 @@ let ADD_MODEL_BOX_LIST = [
     }
   ],
   [
-    {
-      defaultName: '爱人',
-      showAdd: true,
-    },
+    // {
+    //   defaultName: '爱人',
+    //   showAdd: true,
+    // },
     {
       defaultName: '爸爸',
       showAdd: true,
@@ -79,11 +79,11 @@ let ADD_MODEL_BOX_LIST = [
       showAdd: true,
     },
     {
-      defaultName: '爷爷',
+      defaultName: '重要他人',
       showAdd: true,
     },
     {
-      defaultName: '奶奶',
+      defaultName: '重要他人',
       showAdd: true,
     },
   ],
@@ -107,17 +107,13 @@ let ADD_MODEL_BOX_LIST = [
   ],
   [
     {
-      defaultName: '身体',
+      defaultName: '生理',
       showAdd: true,
     },
   ],
   [
     {
-      defaultName: '工作',
-      showAdd: true,
-    },
-    {
-      defaultName: '学习',
+      defaultName: '环境',
       showAdd: true,
     },
   ],

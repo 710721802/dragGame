@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-12 18:03:44
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-08-08 01:28:25
+ * @LastEditTime: 2022-08-10 00:17:54
  * @FilePath: \zb\src\views\gameMainPage\index.vue
 -->
 <template>
@@ -104,16 +104,18 @@
             class="item"
             v-for="(item, index) in addModelBoxList[gameStepNumber]"
             :key="index"
-          >
-            <span class="name" v-show="item.showAdd">
-              {{item.defaultName}}
-            </span>
-            <img
-              v-show="item.showAdd"
-              @click="goEditaddModelData(index, item)"
-              src="@/assets/game/imgBk.png"
-              alt=""
-            >
+          > 
+            <div class="con">
+              <img
+                v-show="item.showAdd"
+                @click="goEditaddModelData(index, item)"
+                src="@/assets/game/imgBk.png"
+                alt=""
+              ><br>
+              <span class="name">
+                {{item.defaultName}}
+              </span>
+            </div>
           </div>
         </div>
         <div

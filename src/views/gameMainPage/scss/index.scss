@@ -121,19 +121,16 @@ $bk_blur: #031428;
           border-radius: 6px;
           overflow: hidden;
           margin-right: 10px;
-          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           .name {
-            position: absolute;
             font-size: 10px;
             font-weight: bold;
             color: #999;
-            display: inline-block;
-            bottom: 5px;
-            left: 0;
-            right: 0;
           }
           img {
-            width: 100px;
+            width: 80px;
           }
         }
       }
