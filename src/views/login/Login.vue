@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-11 17:42:59
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-07-16 13:00:25
+ * @LastEditTime: 2022-08-11 00:25:32
  * @FilePath: \zb\src\views\login\Login.vue
 -->
 <template>
@@ -45,7 +45,7 @@
 <script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
+import request from '@/utils/request'
 export default {
   setup() {
     const router = useRouter()
@@ -59,7 +59,14 @@ export default {
           path: 'start'
         }
       )
-    };
+    }
+    
+    let login = () => {
+      request.get('/pet/2').then(res=>{
+        console.log(res)
+      })
+    }
+    login()
 
     return {
       username,
