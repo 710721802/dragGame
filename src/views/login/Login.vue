@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-06-11 17:42:59
  * @LastEditors: whq 710721802@qq.com
- * @LastEditTime: 2022-08-11 00:25:32
+ * @LastEditTime: 2022-08-24 20:39:16
  * @FilePath: \zb\src\views\login\Login.vue
 -->
 <template>
@@ -45,7 +45,7 @@
 <script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import request from '@/utils/request'
+import api from '@/utils/request'
 export default {
   setup() {
     const router = useRouter()
@@ -61,10 +61,18 @@ export default {
       )
     }
     
-    let login = () => {
-      request.get('/pet/2').then(res=>{
-        console.log(res)
+    let login = async () => {
+      let res = await api.get('/pet/2', {
+        name: '212'
       })
+      console.log(res,'res');
+      // request.get('/pet/2',
+      //   params: {
+      //     name: '21212',
+      //   }
+      // ).then(res=>{
+      //   console.log(res)
+      // })
     }
     login()
 
